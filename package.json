@@ -7,7 +7,7 @@
     "start-server": "cd server && npm run start-be",
     "start-client": "cd client && npm run dev",
     "populate": "cd server && npm run start-populate",
-    "decrypt": "cd server && npm run crypt",
+    "encrypt": "cd server && npm run crypt",
     "start": "concurrently -n client,server -c cyan,magenta \"npm run start-client\" \"npm run start-server\""
   },
   "keywords": [],
