@@ -38,10 +38,11 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
     year: parseInt(subcategory.name.substr(0,4))
   }));
 
-  console.log(decades.length, genres.length);
-
   decades.forEach(async (decade) => {
     genres.forEach(async ({ music_genre } : MusiXGenre) => {
+
+      const genreId = subcategories.filter(subcategory => subcategory.name === music_genre.music_genre_name)[0]?.id;
+
       const f_track_release_group_first_release_date_min = decade.year.toString() + '0101';
       const f_track_release_group_first_release_date_max = (decade.year + 9).toString() + '1231';
 
@@ -63,7 +64,12 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
           trackList.forEach(async ({ track }: MusiXTrack ) => {
             const { track_name, artist_name } = track;
 
-            await insertQuestion(track_name.replace(/'/g, "''"), artist_name, typeId.toString());
+            const { answerId, questionId } = await insertQuestion(track_name.replace(/'/g, "''"), artist_name, typeId.toString());
+
+            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2)', [answerId, decade.id]);
+            await queryDatabase('INSERT INTO subcategory_relation (question_id, subcategory_id) VALUES ($1, $2)', [questionId, decade.id]);
+            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2)', [answerId, genreId]);
+            await queryDatabase('INSERT INTO subcategory_relation (question_id, subcategory_id) VALUES ($1, $2)', [questionId, genreId]);
           })
         })
     })
@@ -71,13 +77,13 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
 }
 
 async function insertQuestion(song: string, artist: string, typeId: string) {
-  const answerId = await queryDatabase(`INSERT INTO answer (text, category_id, type_id) VALUES ($1, 1, $2) ON CONFLICT (text) DO NOTHING RETURNING id`,[artist, typeId]);
+  const answerString = `INSERT INTO answer (text, category_id, type_id) VALUES ($1, 1, $2) ON CONFLICT (text) DO NOTHING`;
+  await queryDatabase(answerString, [artist, typeId]);
 
-  let questionId: any = null;
-  if (answerId.length) {
-    const queryString = `INSERT INTO question (text, category_id, type_id, answer_id) VALUES ('Who Performed ${song}?', 1, $1, $2) returning id`;
-    questionId = await queryDatabase(queryString, [typeId, answerId[0].id]);
-  }
+  const answer = await queryDatabase(`SELECT id FROM answer WHERE text = $1`, [artist]);
 
-  return { answerId, questionId };
+  const questionString = `INSERT INTO question (text, category_id, type_id, answer_id) VALUES ('Who Performed ${song}?', 1, $1, $2) RETURNING id`;
+  const question = await queryDatabase(questionString, [typeId, answer[0]?.id]);
+
+  return { answerId: answer[0]?.id, questionId: question[0]?.id };
 }
