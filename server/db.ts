@@ -1,4 +1,3 @@
-// db.ts
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
@@ -12,11 +11,11 @@ const pool = new Pool({
   port: parseInt(process.env.DB_PORT ?? '5432')
 });
 
-export async function queryDatabase(queryText: string) {
+export async function queryDatabase(queryText: string, params : string [] = []) {
   console.log('SQL query: ', queryText);
   try {
     const client = await pool.connect();
-    const result = await client.query(queryText);
+    const result = await client.query(queryText, params);
     client.release();
     return result.rows;
   } catch (error) {
