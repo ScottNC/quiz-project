@@ -6,7 +6,9 @@
   "scripts": {
     "start-server": "cd server && npm run start-be",
     "start-client": "cd client && npm run dev",
-    "start": "concurrently -n client,server -c cyan,magenta \"npm run start-client\" \"npm run start-server\""
+    "start": "concurrently -n client,server -c cyan,magenta \"npm run start-client\" \"npm run start-server\"",
+    "start-tailwind": "npx tailwindcss -i ./client/src/index.css -o ./client/src/output.css --watch",
+    "start-all": "concurrently -n client,server,tailwind -c cyan,magenta,yellow \"npm run start-client\" \"npm run start-server\" \"npm run start-tailwind\""
   },
   "keywords": [],
   "author": "",
