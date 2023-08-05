@@ -23,3 +23,5 @@ Run `npm run start-all` to run client, server and Tailwind simultaneously
    Open the settings, search for “unknown”, the first result should be the one you’re looking for: CSS > Lint: Unknown At Rules:
 
 - change to ignore
+
+To encrypt an API key run `npm run encrypt APIKEY`
