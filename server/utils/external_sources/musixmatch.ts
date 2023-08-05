@@ -66,9 +66,9 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
 
             const { answerId, questionId } = await insertQuestion(track_name.replace(/'/g, "''"), artist_name, typeId.toString(), categoryId);
 
-            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2)', [answerId, decade.id]);
+            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2) ON CONFLICT (answer_id, subcategory_id) DO NOTHING', [answerId, decade.id]);
             await queryDatabase('INSERT INTO subcategory_relation (question_id, subcategory_id) VALUES ($1, $2)', [questionId, decade.id]);
-            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2)', [answerId, genreId]);
+            await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2) ON CONFLICT (answer_id, subcategory_id) DO NOTHING', [answerId, genreId]);
             await queryDatabase('INSERT INTO subcategory_relation (question_id, subcategory_id) VALUES ($1, $2)', [questionId, genreId]);
           })
         })
