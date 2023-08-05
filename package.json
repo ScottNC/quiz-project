@@ -6,7 +6,8 @@
   "scripts": {
     "start-server": "cd server && npm run start-be",
     "start-client": "cd client && npm run dev",
-    "populate": "cd server && npm run start-populate",
+    "populate-question": "cd server && npm run start-populate-question",
+    "populate-quiz": "cd server && npm run start-populate-quiz",
     "encrypt": "cd server && npm run crypt",
     "start": "concurrently -n client,server -c cyan,magenta \"npm run start-client\" \"npm run start-server\""
   },

@@ -7,7 +7,8 @@
 		"test": "",
 		"crypt": "nodemon encryptor.ts --no-warnings",
 		"start-be": "nodemon index.ts --no-warnings",
-		"start-populate": "nodemon refresh_db.ts --no-warnings"
+		"start-populate-question": "nodemon refresh_questions.ts --no-warnings",
+		"start-populate-quiz": "nodemon refresh_quiz.ts --no-warnings"
 	},
 	"author": "",
 	"license": "ISC",
