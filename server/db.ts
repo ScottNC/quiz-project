@@ -11,7 +11,7 @@ const pool = new Pool({
   port: parseInt(process.env.DB_PORT ?? '5432')
 });
 
-export async function queryDatabase(queryText: string, params : string [] = []) {
+export async function queryDatabase(queryText: string, params : (string | number) [] = []) {
   console.log('SQL query: ', queryText);
   try {
     const client = await pool.connect();

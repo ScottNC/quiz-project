@@ -3,7 +3,7 @@ import { queryDatabase } from "../db";
 interface ExternalSource {
   name: string,
   domain: string,
-  apikey: string
+  apikey: string | null
   category_id: number
 }
 
@@ -37,8 +37,8 @@ async function addQuizzes(category: any) {
   subcategories.forEach(async (subcategory: any) => {
     const questions = await queryDatabase('SELECT question_id FROM subcategory_relation WHERE subcategory_id = $1 AND question_id IS NOT NULL ORDER BY RANDOM() LIMIT 10', [subcategory.id.toString()]);
 
-    if (questions.length === 5) {
-      const quizName = [subcategory.name, category.name, 'Quiz'].join(' ');
+    if (questions.length >= 5) {
+      const quizName = [subcategory.name, category.name].join(' ');
       
       const quizInfo = await queryDatabase('INSERT INTO quiz (name, category_id) VALUES ($1, $2) RETURNING id', [quizName, category.id.toString()]);
 

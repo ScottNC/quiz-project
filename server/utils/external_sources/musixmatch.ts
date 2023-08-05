@@ -2,6 +2,7 @@ import axios from 'axios';
 import { queryDatabase } from '../../db';
 import { MusiXGenre, MusiXTrack } from './musix_types';
 import { decrypt } from '../../decryptor';
+import { insertQuestion } from '../insert_question';
 
 export async function populate(domain: string, encyptedApikey: string, category_id: number) {
   const apikey = decrypt(encyptedApikey);
@@ -64,7 +65,7 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
           trackList.forEach(async ({ track }: MusiXTrack ) => {
             const { track_name, artist_name } = track;
 
-            const { answerId, questionId } = await insertQuestion(track_name.replace(/'/g, "''"), artist_name, typeId.toString(), categoryId);
+            const { answerId, questionId } = await insertQuestion(`Who performed ${track_name.replace(/'/g, "''")}?`, artist_name, typeId.toString(), categoryId);
 
             await queryDatabase('INSERT INTO subcategory_relation (answer_id, subcategory_id) VALUES ($1, $2) ON CONFLICT (answer_id, subcategory_id) DO NOTHING', [answerId, decade.id]);
             await queryDatabase('INSERT INTO subcategory_relation (question_id, subcategory_id) VALUES ($1, $2)', [questionId, decade.id]);
@@ -74,16 +75,4 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
         })
     })
   })
-}
-
-async function insertQuestion(song: string, artist: string, typeId: string, categoryId: string) {
-  const answerString = `INSERT INTO answer (text, category_id, type_id) VALUES ($1, $2, $3) ON CONFLICT (text) DO NOTHING`;
-  await queryDatabase(answerString, [artist, categoryId, typeId]);
-
-  const answer = await queryDatabase(`SELECT id FROM answer WHERE text = $1 and category_id = $2`, [artist, categoryId]);
-
-  const questionString = `INSERT INTO question (text, category_id, type_id, answer_id) VALUES ('Who Performed ${song}?', $1, $2, $3) RETURNING id`;
-  const question = await queryDatabase(questionString, [categoryId, typeId, answer[0]?.id]);
-
-  return { answerId: answer[0]?.id, questionId: question[0]?.id };
 }
