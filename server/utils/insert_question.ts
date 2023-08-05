@@ -1,6 +1,6 @@
 import { queryDatabase } from "../db";
 
-export async function insertQuestion(questionText: string, artist: string, typeId: string, categoryId: string | number) {
+export async function insertQuestion(questionText: string, artist: string, typeId: string | number, categoryId: string | number) {
   const answerString = `INSERT INTO answer (text, category_id, type_id) VALUES ($1, $2, $3) ON CONFLICT (text) DO NOTHING`;
   await queryDatabase(answerString, [artist, categoryId, typeId]);
 
