@@ -53,7 +53,7 @@ async function sortSubcategory(domain: string, apikey: string, genres: MusiXGenr
           f_lyrics_language,
           f_track_release_group_first_release_date_min,
           f_track_release_group_first_release_date_max,
-          page_size: 15,
+          page_size: 7,
           s_track_rating: 'desc',
           apikey,
         }
