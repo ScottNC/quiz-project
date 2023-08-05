@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
@@ -9,9 +9,12 @@ interface Category {
 
 const Category: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const effectCalled = useRef<boolean>(false);
 
   useEffect(() => {
+    if (effectCalled.current) return;
     fetchCategories();
+    effectCalled.current = true;
   }, []);
 
   const fetchCategories = async () => {
