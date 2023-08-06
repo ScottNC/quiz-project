@@ -15,24 +15,24 @@ const Start: React.FC = () => {
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchStarts();
+    postStarts();
     effectCalled.current = true;
   }, []);
 
-  const fetchStarts = async () => {
+  const postStarts = async () => {
     try {
-      const response = await axios.get(BASE_URL + "/start", {
+      const response = await axios.post(BASE_URL + "/start", {
         params: { quizId: quiz_id },
       });
       setStarts(response.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error posting data:", error);
     }
   };
 
   return (
     <section>
-      <h1> Welcome to the Results page</h1>
+      <h1> Welcome to the Start page</h1>
       <ul>
         {starts.map((start) => (
           <li key={start.id}>{start.name}</li>

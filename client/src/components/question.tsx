@@ -39,20 +39,18 @@ const Question: React.FC = () => {
 
   return (
     <section>
-      <h1>
-        {questions.map((question) => (
-          <p>{question.questionText} </p>
-        ))}
-      </h1>
+      {questions.map((question) => (
+        <h1>{question.questionText} </h1>
+      ))}
     </section>
 
-    //     <ul>
-    //        {(questions.answers).map((answer) => (
-    //           <li key={answer.answerId}>{answer.answerText}</li>
-    //         ))}
-    //       </ul>
-    //     </h2>
-    //   </section>
+    // <div>
+    //   <ul>
+    //     {questions.answers.map((answer) => (
+    //       <li key={answer.answerId}>{answer.answerText}</li>
+    //     ))}
+    //   </ul>
+    // </div>
   );
 };
 

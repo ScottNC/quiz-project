@@ -11,7 +11,7 @@ const Subcategory: React.FC = () => {
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const cat_id = 1; // hardcoded should be passed from category page
+  const category_id = 1; // hardcoded should be passed from category page
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -22,7 +22,7 @@ const Subcategory: React.FC = () => {
   const fetchSubcategories = async () => {
     try {
       const response = await axios.get(BASE_URL + "/subcategory", {
-        params: { categoryId: cat_id },
+        params: { categoryId: category_id },
       });
       setSubcategories(response.data);
     } catch (error) {

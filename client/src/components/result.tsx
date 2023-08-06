@@ -3,8 +3,9 @@ import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
 interface Result {
-  id: number;
-  name: string;
+  answered: number;
+  correct: number;
+  questionCount: number;
 }
 
 const Result: React.FC = () => {
@@ -32,12 +33,13 @@ const Result: React.FC = () => {
 
   return (
     <section>
-      <h1> Welcome to the Results page</h1>
-      <ul>
-        {results.map((result) => (
-          <li key={result.id}>{result.name}</li>
-        ))}
-      </ul>
+      <h1> Welcome to the Result page</h1>
+
+      {results.map((result) => (
+        <h2>
+          You got {result.correct} out of {result.questionCount}
+        </h2>
+      ))}
     </section>
   );
 };

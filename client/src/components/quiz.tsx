@@ -12,7 +12,7 @@ const Quiz: React.FC = () => {
   const effectCalled = useRef<boolean>(false);
 
   const category_id = 1; // hard coded should be passed from previous page
-  const limit_no = 4; // how many quiz options we want to bring back
+  const limit_no = 10; // how many quiz options we want to bring back
 
   useEffect(() => {
     if (effectCalled.current) return;
