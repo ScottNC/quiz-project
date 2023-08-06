@@ -5,8 +5,10 @@ import Category from "../components/category";
 import Health from "../components/health";
 import Help from "../components/help";
 import Settings from "../components/settings";
+import Start from "../components/start";
+import Result from "../components/result";
 import Question from "../components/question";
-import QuizType from "../components/quiztype";
+import Quiz from "../components/quiz";
 import SubCategory from "../components/subcategory";
 import NotFound from "../components/notfound";
 
@@ -19,8 +21,10 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="health" element={<Health />} />
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
+      <Route path="start" element={<Start />} />
+      <Route path="result" element={<Result />} />
       <Route path="question" element={<Question />} />
-      <Route path="quiztype" element={<QuizType />} />
+      <Route path="quiz" element={<Quiz />} />
       <Route path="subcategory" element={<SubCategory />} />
       <Route path="*" element={<NotFound />} />
     </Route>

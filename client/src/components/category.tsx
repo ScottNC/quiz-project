@@ -28,7 +28,6 @@ const Category: React.FC = () => {
 
   return (
     <div>
-      <h1>Categories</h1>
       <ul>
         {categories.map((category) => (
           <li key={category.id}>{category.name}</li>
