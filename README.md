@@ -3,6 +3,12 @@
 This is a basic setup for the quiz app
 
 When cloned run `npm install` and `cd client && npm install`
+On root folder `code server/.env` to create  file `.env` and  paste the below code
+DB_USER=teamc
+DB_HOST=quiz-lab.c0sldoxkysx5.eu-west-2.rds.amazonaws.com
+DB_DATABASE=postgres
+DB_PASSWORD=(our secret password)
+DB_PORT=5432
 
 Run `npm run start-server` to run the backend
 

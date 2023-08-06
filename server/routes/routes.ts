@@ -87,7 +87,6 @@ export function addAPIRoutes(app: Express) {
 	apiRouter.post('/start', async(req: Request, res: Response) => {
     try {
       const quizId = req.query?.quizId;
-
       if (!isNumberString(quizId)) res.status(400).json({ error : 'Must contain quidId and it must be a number' });
       else {
         const result = await postStart(quizId);
