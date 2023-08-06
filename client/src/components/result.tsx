@@ -12,15 +12,15 @@ const Result: React.FC = () => {
   const [results, setResults] = useState<Result[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const round_id = 1; // hardcoded should be passed from previous page
+  const round_id = 10; // hardcoded should be passed from previous page
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchSubcategories();
+    fetchRound();
     effectCalled.current = true;
   }, []);
 
-  const fetchSubcategories = async () => {
+  const fetchRound = async () => {
     try {
       const response = await axios.get(BASE_URL + "/result", {
         params: { roundId: round_id },
