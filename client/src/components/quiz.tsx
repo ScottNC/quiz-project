@@ -12,7 +12,7 @@ const Quiz: React.FC = () => {
   const effectCalled = useRef<boolean>(false);
 
   const category_id = 1; // hard coded should be passed from previous page
-  const limit_no = 10; // how many quiz options we want to bring back
+  const number_of_returns = 5; // how many quiz options we want to bring back
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -23,7 +23,7 @@ const Quiz: React.FC = () => {
   const fetchQuizzes = async () => {
     try {
       const response = await axios.get(BASE_URL + "/quiz", {
-        params: { categoryId: category_id, limit: limit_no },
+        params: { categoryId: category_id, numberOfReturns: number_of_returns },
       });
 
       setQuizzes(response.data);

@@ -4,14 +4,14 @@ import { BASE_URL } from "../helpers/base_url";
 
 interface Start {
   id: number;
-  name: string;
+  message: string;
 }
 
 const Start: React.FC = () => {
   const [starts, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const quiz_id = 77; // hardcoded should be passed from previous page
+  const quiz_id = 77; // hardcoded should be passed from previous quiz page
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -35,7 +35,7 @@ const Start: React.FC = () => {
       <h1> Welcome to the Start page</h1>
       <ul>
         {starts.map((start) => (
-          <li key={start.id}>{start.name}</li>
+          <li key={start.id}>{start.message}</li>
         ))}
       </ul>
     </section>

@@ -37,21 +37,23 @@ const Question: React.FC = () => {
     }
   };
 
-  return (
+  return [
     <section>
       {questions.map((question) => (
         <h1>{question.questionText} </h1>
+
+        //     <p> {question.[answers]}</p>
       ))}
-    </section>
+    </section>,
 
     // <div>
     //   <ul>
-    //     {questions.answers.map((answer) => (
+    //     {questionsanswers.map((answer) => (
     //       <li key={answer.answerId}>{answer.answerText}</li>
     //     ))}
     //   </ul>
     // </div>
-  );
+  ];
 };
 
 export default Question;
