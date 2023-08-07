@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
+import { useParams, Link } from "react-router-dom";
 
 interface Start {
   id: number;
@@ -11,7 +12,7 @@ const Quiz: React.FC = () => {
   const [starts, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const quiz_id = 77; // hardcoded should be passed from previous quiz page
+  const { quizId } = useParams();
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -22,7 +23,7 @@ const Quiz: React.FC = () => {
   const postStarts = async () => {
     try {
       const response = await axios.post(BASE_URL + "/start", {
-        params: { quizId: quiz_id },
+        params: { quizId: quizId },
       });
       setStarts(response.data);
     } catch (error) {
@@ -32,12 +33,13 @@ const Quiz: React.FC = () => {
 
   return (
     <section>
-      <h1> Welcome to the Start page</h1>
-      <ul>
-        {starts.map((start) => (
-          <li key={start.id}>{start.message}</li>
-        ))}
-      </ul>
+      <h1> Are you ready to start </h1>
+
+      <Link to={`/start/${quizId}`}>
+        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
+          Start
+        </button>
+      </Link>
     </section>
   );
 };

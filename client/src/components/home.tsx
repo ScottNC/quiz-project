@@ -30,7 +30,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col gap-y-12;">
       {categories.map((category) => (
-        <Link to={`subcategory/${category.id}`}>
+        <Link to={`/category/${category.id}`}>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
             key={category.id}

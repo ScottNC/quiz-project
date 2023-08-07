@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
-
+import { useParams, Link } from "react-router-dom";
 interface Answer {
   answerId: number;
   answerText: string;
@@ -14,10 +14,11 @@ interface Question {
   answers: Array<Answer>;
 }
 const Start: React.FC = () => {
-  const [questions, setQuestions] = useState<Question>();
+  const [question, setQuestion] = useState<Question>();
   const effectCalled = useRef<boolean>(false);
 
-  const quiz_id = 77; // hardcoded should be passed from quiz type page
+  const { quizId } = useParams();
+
   const question_no = 1; // set to first question
 
   useEffect(() => {
@@ -29,13 +30,27 @@ const Start: React.FC = () => {
   const fetchQuestions = async () => {
     try {
       const response = await axios.get(BASE_URL + "/question", {
-        params: { quizId: quiz_id, questionNumber: question_no },
+        params: { quizId: quizId, questionNumber: question_no },
       });
-      setQuestions(response.data);
+      setQuestion(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-};
 
+  return (
+    <section className="bg-green-200">
+      <h1 className="text-3xl text-green-800 font-bold">
+        {" "}
+        Are you ready for the First Question?
+      </h1>
+
+      <Link to={`/question/${quizId}`}>
+        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
+          Yes
+        </button>
+      </Link>
+    </section>
+  );
+};
 export default Start;

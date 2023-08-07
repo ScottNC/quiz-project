@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
+import { useParams, Link } from "react-router-dom";
 
 interface Quiz {
   id: number;
@@ -11,7 +12,8 @@ const Subcategory: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const category_id = 1; // hard coded should be passed from previous page
+  const { categoryId } = useParams();
+
   const number_of_returns = 5; // how many quiz options we want to bring back
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const Subcategory: React.FC = () => {
   const fetchQuizzes = async () => {
     try {
       const response = await axios.get(BASE_URL + "/quiz", {
-        params: { categoryId: category_id, numberOfReturns: number_of_returns },
+        params: { categoryId: categoryId, numberOfReturns: number_of_returns },
       });
 
       setQuizzes(response.data);
@@ -34,11 +36,16 @@ const Subcategory: React.FC = () => {
 
   return (
     <section>
-      <ul>
-        {quizzes.map((quiz) => (
-          <li key={quiz.id}>{quiz.name}</li>
-        ))}
-      </ul>
+      {quizzes.map((quiz) => (
+        <Link to={`/start/${quiz.id}`}>
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
+            key={quiz.id}
+          >
+            {quiz.name}
+          </button>
+        </Link>
+      ))}
     </section>
   );
 };

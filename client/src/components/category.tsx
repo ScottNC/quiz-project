@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
+import { useParams, Link } from "react-router-dom";
 
 interface Subcategory {
   id: number;
@@ -11,7 +12,7 @@ const Category: React.FC = () => {
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const category_id = 1; // hardcoded should be passed from category page
+  const { categoryId } = useParams();
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -22,7 +23,7 @@ const Category: React.FC = () => {
   const fetchSubcategories = async () => {
     try {
       const response = await axios.get(BASE_URL + "/subcategory", {
-        params: { categoryId: category_id },
+        params: { categoryId: categoryId },
       });
       setSubcategories(response.data);
     } catch (error) {
@@ -32,12 +33,18 @@ const Category: React.FC = () => {
 
   return (
     <section>
-      <h1> Welcome to the Subcategory page</h1>
-      <ul>
-        {subcategories.map((subcategory) => (
-          <li key={subcategory.id}>{subcategory.name}</li>
-        ))}
-      </ul>
+      <h1> Please select a Sub Category</h1>
+
+      {subcategories.map((subcategory) => (
+        <Link to={`/subcategory/${categoryId}`}>
+          <button
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
+            key={subcategory.id}
+          >
+            {subcategory.name}
+          </button>
+        </Link>
+      ))}
     </section>
   );
 };
