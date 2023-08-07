@@ -1,6 +1,5 @@
 
-import React, { useState, useEffect, useRef } from "react";
-import { putAnswer } from "./api";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
@@ -8,6 +7,7 @@ interface Answer {
   id: number;
   answerId: number;
   answer: string;
+  correct: boolean;
 }
 
 interface Question {
@@ -19,35 +19,33 @@ interface Question {
 
 const Question: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const effectCalled = useRef<boolean>(false);
-  const quizId = 77; // Replace with the actual quiz ID
-  const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [correct, setCorrect] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (effectCalled.current) return;
     fetchQuestions();
-    effectCalled.current = true;
   }, []);
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/question`, {
-        params: { quizId, questionNumber },
-      });
+      const response = await axios.get(`${BASE_URL}/question`);
       setQuestions(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const handleAnswer = async ( correct: boolean) => {
+  const handleAnswer = async (roundId: number, questionNumber: number, answerId: number, correct: boolean) => {
     try {
-      // Make a PUT request to save the answer to the server
-      const response = await putAnswer(quizId, questionNumber, correct);
-      console.log("Answer sent to server:", response);
+      setSelectedAnswer(answerId);
+      setCorrect(correct);
 
-      // Move to the next question after answering
-      setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
+      const response = await axios.put(`${BASE_URL}/put-answer`, {
+        roundId,
+        questionNumber,
+        correct,
+      });
+      console.log("Answer sent to server:", response.data);
     } catch (error) {
       console.error("Error sending answer to server:", error);
     }
@@ -61,12 +59,24 @@ const Question: React.FC = () => {
           <ul>
             {question.answers.map((answer) => (
               <li key={answer.answerId}>
-                {answer.answer}
-                <button onClick={() => handleAnswer( true)}>Select</button>
-                {/* Replace 'true' with the appropriate correct value based on user's answer */}
+                <div
+                  className={selectedAnswer === answer.answerId ? "selected-answer" : ""}
+                  style={{ backgroundColor: selectedAnswer === answer.answerId ? "lightblue" : "transparent" }}
+                >
+                  {answer.answer}
+                </div>
+                <button onClick={() => handleAnswer(1, question.id, answer.answerId, answer.correct)}>
+                  Select
+                </button>
               </li>
             ))}
           </ul>
+          {selectedAnswer !== null && correct !== null && (
+            <div>
+              <p>Selected Answer ID: {selectedAnswer}</p>
+              <p>Correctness: {correct ? "Correct" : "Incorrect"}</p>
+            </div>
+          )}
         </div>
       ))}
     </section>
