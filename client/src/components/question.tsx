@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect, useRef } from "react";
+import { putAnswer } from "./api";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
@@ -7,18 +9,19 @@ interface Answer {
   answerId: number;
   answer: string;
 }
-interface Questions {
+
+interface Question {
   id: number;
   questionText: string;
   multipleChoice: boolean;
   answers: Array<Answer>;
 }
-const Question: React.FC = () => {
-  const [questions, setQuestions] = useState<Questions[]>([]);
-  const effectCalled = useRef<boolean>(false);
 
-  const quiz_id = 77; // hardcoded should be passed from quiz type page
-  const question_no = 1; // set to first question
+const Question: React.FC = () => {
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const effectCalled = useRef<boolean>(false);
+  const quizId = 77; // Replace with the actual quiz ID
+  const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -28,8 +31,8 @@ const Question: React.FC = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(BASE_URL + "/question", {
-        params: { quizId: quiz_id, questionNumber: question_no },
+      const response = await axios.get(`${BASE_URL}/question`, {
+        params: { quizId, questionNumber },
       });
       setQuestions(response.data);
     } catch (error) {
@@ -37,20 +40,36 @@ const Question: React.FC = () => {
     }
   };
 
+  const handleAnswer = async ( correct: boolean) => {
+    try {
+      // Make a PUT request to save the answer to the server
+      const response = await putAnswer(quizId, questionNumber, correct);
+      console.log("Answer sent to server:", response);
+
+      // Move to the next question after answering
+      setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
+    } catch (error) {
+      console.error("Error sending answer to server:", error);
+    }
+  };
+
   return (
     <section>
       {questions.map((question) => (
-        <h1>{question.questionText} </h1>
+        <div key={question.id}>
+          <h1>{question.questionText}</h1>
+          <ul>
+            {question.answers.map((answer) => (
+              <li key={answer.answerId}>
+                {answer.answer}
+                <button onClick={() => handleAnswer( true)}>Select</button>
+                {/* Replace 'true' with the appropriate correct value based on user's answer */}
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
     </section>
-
-    // <div>
-    //   <ul>
-    //     {questions.answers.map((answer) => (
-    //       <li key={answer.answerId}>{answer.answerText}</li>
-    //     ))}
-    //   </ul>
-    // </div>
   );
 };
 
