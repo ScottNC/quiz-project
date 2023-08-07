@@ -2,38 +2,43 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
-interface Category {
+interface Subcategory {
   id: number;
   name: string;
 }
 
 const Category: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const effectCalled = useRef<boolean>(false);
+
+  const category_id = 1; // hardcoded should be passed from category page
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchCategories();
+    fetchSubcategories();
     effectCalled.current = true;
   }, []);
 
-  const fetchCategories = async () => {
+  const fetchSubcategories = async () => {
     try {
-      const response = await axios.get(BASE_URL + "/category");
-      setCategories(response.data);
+      const response = await axios.get(BASE_URL + "/subcategory", {
+        params: { categoryId: category_id },
+      });
+      setSubcategories(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
   return (
-    <div>
+    <section>
+      <h1> Welcome to the Subcategory page</h1>
       <ul>
-        {categories.map((category) => (
-          <li key={category.id}>{category.name}</li>
+        {subcategories.map((subcategory) => (
+          <li key={subcategory.id}>{subcategory.name}</li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

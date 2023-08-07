@@ -2,44 +2,40 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
-interface Start {
-  id: number;
-  message: string;
+interface Answer {
+  answerId: number;
+  answerText: string;
+  answerIsCorrect: boolean;
 }
-
+interface Question {
+  id: number;
+  questionText: string;
+  multipleChoice: boolean;
+  answers: Array<Answer>;
+}
 const Start: React.FC = () => {
-  const [starts, setStarts] = useState<Start[]>([]);
+  const [questions, setQuestions] = useState<Question>();
   const effectCalled = useRef<boolean>(false);
 
-  const quiz_id = 77; // hardcoded should be passed from previous quiz page
+  const quiz_id = 77; // hardcoded should be passed from quiz type page
+  const question_no = 1; // set to first question
 
   useEffect(() => {
     if (effectCalled.current) return;
-    postStarts();
+    fetchQuestions();
     effectCalled.current = true;
   }, []);
 
-  const postStarts = async () => {
+  const fetchQuestions = async () => {
     try {
-      const response = await axios.post(BASE_URL + "/start", {
-        params: { quizId: quiz_id },
+      const response = await axios.get(BASE_URL + "/question", {
+        params: { quizId: quiz_id, questionNumber: question_no },
       });
-      setStarts(response.data);
+      setQuestions(response.data);
     } catch (error) {
-      console.error("Error posting data:", error);
+      console.error("Error fetching data:", error);
     }
   };
-
-  return (
-    <section>
-      <h1> Welcome to the Start page</h1>
-      <ul>
-        {starts.map((start) => (
-          <li key={start.id}>{start.message}</li>
-        ))}
-      </ul>
-    </section>
-  );
 };
 
 export default Start;

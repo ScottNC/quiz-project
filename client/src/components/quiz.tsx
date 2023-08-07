@@ -2,41 +2,40 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
-interface Quiz {
+interface Start {
   id: number;
-  name: string;
+  message: string;
 }
 
 const Quiz: React.FC = () => {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [starts, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const category_id = 1; // hard coded should be passed from previous page
-  const number_of_returns = 5; // how many quiz options we want to bring back
+  const quiz_id = 77; // hardcoded should be passed from previous quiz page
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchQuizzes();
+    postStarts();
     effectCalled.current = true;
   }, []);
 
-  const fetchQuizzes = async () => {
+  const postStarts = async () => {
     try {
-      const response = await axios.get(BASE_URL + "/quiz", {
-        params: { categoryId: category_id, numberOfReturns: number_of_returns },
+      const response = await axios.post(BASE_URL + "/start", {
+        params: { quizId: quiz_id },
       });
-
-      setQuizzes(response.data);
+      setStarts(response.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error posting data:", error);
     }
   };
 
   return (
     <section>
+      <h1> Welcome to the Start page</h1>
       <ul>
-        {quizzes.map((quiz) => (
-          <li key={quiz.id}>{quiz.name}</li>
+        {starts.map((start) => (
+          <li key={start.id}>{start.message}</li>
         ))}
       </ul>
     </section>

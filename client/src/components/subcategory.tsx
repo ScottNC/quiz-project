@@ -2,29 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 
-interface Subcategory {
+interface Quiz {
   id: number;
   name: string;
 }
 
 const Subcategory: React.FC = () => {
-  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const category_id = 1; // hardcoded should be passed from category page
+  const category_id = 1; // hard coded should be passed from previous page
+  const number_of_returns = 5; // how many quiz options we want to bring back
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchSubcategories();
+    fetchQuizzes();
     effectCalled.current = true;
   }, []);
 
-  const fetchSubcategories = async () => {
+  const fetchQuizzes = async () => {
     try {
-      const response = await axios.get(BASE_URL + "/subcategory", {
-        params: { categoryId: category_id },
+      const response = await axios.get(BASE_URL + "/quiz", {
+        params: { categoryId: category_id, numberOfReturns: number_of_returns },
       });
-      setSubcategories(response.data);
+
+      setQuizzes(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -32,10 +34,9 @@ const Subcategory: React.FC = () => {
 
   return (
     <section>
-      <h1> Welcome to the Subcategory page</h1>
       <ul>
-        {subcategories.map((subcategory) => (
-          <li key={subcategory.id}>{subcategory.name}</li>
+        {quizzes.map((quiz) => (
+          <li key={quiz.id}>{quiz.name}</li>
         ))}
       </ul>
     </section>

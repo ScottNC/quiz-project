@@ -1,31 +1,35 @@
 import { Routes, Route } from "react-router-dom";
 import MainLayout from "../components/layouts/MainLayout";
-import Home from "../components/home";
-import Category from "../components/category";
+import Welcome from "../components/welcome";
 import Health from "../components/health";
 import Help from "../components/help";
 import Settings from "../components/settings";
-import Start from "../components/start";
-import Result from "../components/result";
-import Question from "../components/question";
-import Quiz from "../components/quiz";
+import Home from "../components/home";
+import Category from "../components/category";
 import SubCategory from "../components/subcategory";
+import Quiz from "../components/quiz";
+import Start from "../components/start";
+import Question from "../components/question";
+import Next from "../components/next";
+import Result from "../components/result";
 import NotFound from "../components/notfound";
 
 export const QuizAppRouter: React.FC = () => (
   <Routes>
     <Route path="/" element={<MainLayout />}>
-      <Route index element={<Home />} />
-      <Route path="home" element={<Home />} />
-      <Route path="category" element={<Category />} />
+      <Route index element={<Welcome />} />
+      <Route path="welcome" element={<Welcome />} />
       <Route path="health" element={<Health />} />
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
-      <Route path="start" element={<Start />} />
-      <Route path="result" element={<Result />} />
-      <Route path="question" element={<Question />} />
-      <Route path="quiz" element={<Quiz />} />
+      <Route path="home" element={<Home />} />
+      <Route path="category" element={<Category />} />
       <Route path="subcategory" element={<SubCategory />} />
+      <Route path="quiz" element={<Quiz />} />
+      <Route path="start" element={<Start />} />
+      <Route path="question" element={<Question />} />
+      <Route path="next" element={<Next />} />
+      <Route path="result" element={<Result />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </Routes>
