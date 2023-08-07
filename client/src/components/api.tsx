@@ -6,14 +6,13 @@ interface PutAnswerResponse {
   finished: boolean;
 }
 
-export const putAnswer = async (
+export const StoreAnswer = async (
   roundId: number,
   questionNumber: number,
   correct: boolean
 ): Promise<PutAnswerResponse> => {
   try {
-    const response = await axios.put(`${BASE_URL}/putAnswer`,
-     {
+    const response = await axios.put(`${BASE_URL}/answer`, {
       roundId,
       questionNumber,
       correct,

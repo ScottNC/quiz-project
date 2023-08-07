@@ -10,7 +10,6 @@ import SubCategory from "../components/subcategory";
 import Quiz from "../components/quiz";
 import Start from "../components/start";
 import Question from "../components/question";
-import Next from "../components/next";
 import Result from "../components/result";
 import NotFound from "../components/notfound";
 
@@ -26,9 +25,8 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="category/:categoryId" element={<Category />} />
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
       <Route path="quiz/:quizId" element={<Quiz />} />
-      <Route path="start/:quizId" element={<Start />} />
-      <Route path="question/:questionId" element={<Question />} />
-      <Route path="next" element={<Next />} />
+      <Route path="start/:quizId:roundId" element={<Start />} />
+      <Route path="question/:quizId:roundId" element={<Question />} />
       <Route path="result" element={<Result />} />
       <Route path="*" element={<NotFound />} />
     </Route>

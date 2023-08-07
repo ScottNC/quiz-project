@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect, useRef } from "react";
-import { putAnswer } from "./api";
+import { storeAnswer } from "./answer";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
+import { useParams, Link } from "react-router-dom";
 
 interface Answer {
   id: number;
@@ -21,7 +21,9 @@ interface QuestionProp {
 const Question: React.FC = () => {
   const [questions, setQuestions] = useState<QuestionProp[]>([]);
   const effectCalled = useRef<boolean>(false);
-  const quizId = 77; // Replace with the actual quiz ID
+
+  const { quizId } = useParams();
+
   const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const Question: React.FC = () => {
     try {
       console.log(correct);
       // Make a PUT request to save the answer to the server
-      const response = await putAnswer(quizId, questionNumber, correct);
+      const response = await storeAnswer(roundId, questionNumber, correct);
       console.log("Answer sent to server:", response);
 
       // Move to the next question after answering
@@ -56,20 +58,33 @@ const Question: React.FC = () => {
   };
 
   return (
-    <section>
+    <div className="flex flex-col gap-y-12;">
       {questions.map((question) => (
         <div key={question.id}>
           <h1>{question.questionText}</h1>
-          <ul>
-            {question.answers.map((answer) => (
-              <li key={answer.answerId}>
-                <button onClick={() => handleAnswer(answer.correct)}>{answer.answer}</button>
-              </li>
-            ))}
-          </ul>
+          {question.answers.map((answer) => (
+            <button
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
+              key={answer.id}
+              onClick={() => handleAnswer(answer.correct)}
+            >
+              {answer.answer}
+            </button>
+          ))}
         </div>
+
+        //   <ul>
+        //     {question.answers.map((answer) => (
+        //       <li key={answer.answerId}>
+        //         <button onClick={() => handleAnswer(answer.correct)}>
+        //           {answer.answer}
+        //         </button>
+        //       </li>
+        //     ))}
+        //   </ul>
+        // </div>
       ))}
-    </section>
+    </div>
   );
 };
 

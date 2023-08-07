@@ -15,20 +15,25 @@ interface Question {
 }
 
 const Start: React.FC = () => {
-  const [question, setQuestion] = useState<Question>({id: 1 , questionText: '', multipleChoice: true, answers: []});
+  const [question, setQuestion] = useState<Question>({
+    id: 1,
+    questionText: "",
+    multipleChoice: true,
+    answers: [],
+  });
   const effectCalled = useRef<boolean>(false);
 
-  const { quizId } = useParams();
+  const { quizId, roundId } = useParams();
 
   const question_no = 1; // set to first question
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchQuestions();
+    fetchQuestion();
     effectCalled.current = true;
   }, []);
 
-  const fetchQuestions = async () => {
+  const fetchQuestion = async () => {
     try {
       const response = await axios.get(BASE_URL + "/question", {
         params: { quizId: quizId, questionNumber: question_no },
@@ -46,7 +51,7 @@ const Start: React.FC = () => {
         Are you ready for the First Question?
       </h1>
 
-      <Link to={`/question/${question.id}`}>
+      <Link to={`/question/${quizId}:${roundId}`}>
         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
           Yes
         </button>
