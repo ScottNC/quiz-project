@@ -13,8 +13,9 @@ interface Question {
   multipleChoice: boolean;
   answers: Array<Answer>;
 }
+
 const Start: React.FC = () => {
-  const [question, setQuestion] = useState<Question>();
+  const [question, setQuestion] = useState<Question>({id: 1 , questionText: '', multipleChoice: true, answers: []});
   const effectCalled = useRef<boolean>(false);
 
   const { quizId } = useParams();
@@ -45,7 +46,7 @@ const Start: React.FC = () => {
         Are you ready for the First Question?
       </h1>
 
-      <Link to={`/question/${quizId}`}>
+      <Link to={`/question/${question.id}`}>
         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
           Yes
         </button>

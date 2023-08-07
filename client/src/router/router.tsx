@@ -27,7 +27,7 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
       <Route path="quiz/:quizId" element={<Quiz />} />
       <Route path="start/:quizId" element={<Start />} />
-      <Route path="question" element={<Question />} />
+      <Route path="question/:questionId" element={<Question />} />
       <Route path="next" element={<Next />} />
       <Route path="result" element={<Result />} />
       <Route path="*" element={<NotFound />} />

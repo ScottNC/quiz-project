@@ -9,7 +9,7 @@ interface Start {
 }
 
 const Quiz: React.FC = () => {
-  const [starts, setStarts] = useState<Start[]>([]);
+  const [, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
   const { quizId } = useParams();
