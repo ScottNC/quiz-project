@@ -1,7 +1,6 @@
 export type Answer = {
   answerId: `${number}`,
   answer: string,
-  correct: boolean
 }
 
 export type Question = {
