@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
+import { useParams } from "react-router-dom";
 
 interface Results {
   answered: number;
@@ -12,31 +13,38 @@ const Result: React.FC = () => {
   const [results, setResults] = useState<Results[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const round_id = 10; // hardcoded should be passed from previous page
+  const { round } = useParams<{
+    round: string;
+  }>();
 
   useEffect(() => {
     if (effectCalled.current) return;
-    fetchRound();
     effectCalled.current = true;
-  }, []);
+    const fetchRound = async () => {
+      try {
+        const response = await axios.get(BASE_URL + "/result", {
+          params: { roundId: round },
+        });
+        setResults(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchRound();
+  }, [round]);
 
-  const fetchRound = async () => {
-    try {
-      const response = await axios.get(BASE_URL + "/result", {
-        params: { roundId: round_id },
-      });
-      setResults(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  return (
+  return results.length? (
     <section>
-      <h1> Welcome to the Result page</h1>
+      <h1> Welcome to the Results page</h1>
         <h2 >
-          You got {results[0].correct} out of {results[0].questionCount}
+          You have scored {results[0].correct} out of {results[0].questionCount}!
         </h2>
+    </section>
+  ) : (
+    <section>
+      <h2 >
+        Loading Results...
+      </h2>
     </section>
   );
 };

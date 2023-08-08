@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface Answer {
   id: number;
@@ -13,6 +13,7 @@ interface QuestionProp {
   id: number;
   questionText: string;
   multipleChoice: boolean;
+  finalQuestion: boolean;
   answers: Array<Answer>;
 }
 
@@ -44,18 +45,13 @@ const Question: React.FC = () => {
       try {
 
         const currentQuestionResponse = await axios.get(`${BASE_URL}/currentquestion?roundId=${roundId}`);
-
         const currentQuestion : CurrentQuestion[] = currentQuestionResponse.data;
-
         setQuestionNumber(currentQuestion[0].answered + 1)
 
         const questionResponse = await axios.get(
           `${BASE_URL}/question?quizId=${quizId}&questionNumber=${currentQuestion[0].answered + 1}`
         );
         setQuestions(questionResponse.data);
-
-        
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -87,14 +83,26 @@ const Question: React.FC = () => {
   const nextQuestionButton = () => {
   
     if (right !== null || wrong !== null) {
-      return (
-          <button
-            className="bg-blue-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={nextQuestion}
-          >
-            Next Question
-          </button>
-      );
+      if (questions[0].finalQuestion)
+        return (
+          <Link to={`/result/${roundId}`}>
+            <button
+              className="bg-orange-300 hover:bg-orange-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+              onClick={nextQuestion}
+            >
+              Finish Quiz
+            </button>
+          </Link>
+        );
+      else
+        return (
+            <button
+              className="bg-blue-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+              onClick={nextQuestion}
+            >
+              Next Question
+            </button>
+        );
     } else return null;
   };
   
@@ -122,16 +130,15 @@ const Question: React.FC = () => {
         }
       });
   
-      const response = await axios.get(`${BASE_URL}/question?quizId=${quizId}&questionNumber=${questionNumber + 1}`
-      );
-      setQuestions(response.data);
-
-      setRight(null);
-      setWrong(null);
-      setCorrect(null);
+      if (!questions[0].finalQuestion) {
+        const response = await axios.get(`${BASE_URL}/question?quizId=${quizId}&questionNumber=${questionNumber + 1}`);
+        setQuestions(response.data);
+        setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
+        setRight(null);
+        setWrong(null);
+        setCorrect(null);
+      }
   
-      // Move to the next question after answering
-      setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
     } catch (error) {
       console.error("Error sending answer to server:", error);
     }
