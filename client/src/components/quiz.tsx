@@ -2,40 +2,37 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
-import { parse } from "dotenv";
-
-interface Start {
-  id: number;
-  message: string;
-}
 
 const Quiz: React.FC = () => {
-  const [starts, setStarts] = useState<Start[]>([]);
+  const [quizExists, setQuizExists] = useState<boolean>(false);
   const effectCalled = useRef<boolean>(false);
 
-  //const { quizId } = useParams();
-
-  const quizId = 77;
-
-  // if (quizId != undefined){
-  //   const quizNo = parseInt(quizId);
-  // }
+  const { quizId } = useParams();
 
   useEffect(() => {
-    if (effectCalled.current) return;
-    postStarts();
-    effectCalled.current = true;
-  }, []);
+    {
+      try {
+        if (effectCalled.current) return;
 
-  const postStarts = async () => {
-    try {
-      const response = await axios.post(BASE_URL + `/start/${quizId}`);
+        effectCalled.current = true;
 
-      setStarts(response.data);
-    } catch (error) {
-      console.error("Error posting data:", error);
-    }
-  };
+        if (quizId === undefined) return;
+
+        axios.post(BASE_URL + `/start?quizId=${parseInt(quizId)}`)
+          .then(response => response.data)
+          .then(data => setQuizExists(!!data.length));
+        
+      } catch (error) {
+        console.error("Error posting data:", error);
+      }
+  }}, [quizId]);
+
+  if (!quizExists)
+    return (
+      <div className="flex flex-col gap-y-12;">
+        <h1> Quiz missing </h1>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-y-12;">

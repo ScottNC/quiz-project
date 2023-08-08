@@ -35,7 +35,7 @@ const Question: React.FC = () => {
   const fetchQuestions = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/question/${quizId}/${questionNumber}`
+        `${BASE_URL}/question?quizId=${quizId}&questionNumber=${questionNumber}`
       );
       setQuestions(response.data);
     } catch (error) {
@@ -47,8 +47,10 @@ const Question: React.FC = () => {
     try {
       console.log(correct);
       // Make a PUT request to save the answer to the server
-      const response = await storeAnswer(roundId, questionNumber, correct);
-      console.log("Answer sent to server:", response);
+      console.log(questionNumber, correct)
+      
+      // const response = await storeAnswer(roundId, questionNumber, correct);
+      // console.log("Answer sent to server:", response);
 
       // Move to the next question after answering
       setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
