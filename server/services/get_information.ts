@@ -53,7 +53,7 @@ export async function getQuestion (quizId: QueryParams, questionNumber: QueryPar
 
 async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, answer: string) {
 
-  const otherAnswerQuery : string = `SELECT a.id AS "answerId", a.text AS answer FROM answer AS a 
+  const otherAnswerQuery : string = `SELECT DISTINCT a.id AS "answerId", a.text AS answer FROM answer AS a 
                                       JOIN subcategory_relation AS sr ON a.id = sr.answer_id AND sr.subcategory_id IN 
                                       (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
                                       WHERE NOT a.id = ${answerId} AND a.type_id  = (SELECT type_id FROM question 
