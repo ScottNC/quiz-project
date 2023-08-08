@@ -35,11 +35,19 @@ export async function getQuestion (quizId: QueryParams, questionNumber: QueryPar
 
   if (questionAnswerInfo.length === 0) throw new Error('This question does not exist');
 
+  console.log(questionAnswerInfo[0]);
+
   const { questionText, id, answerId, answer, multipleChoice } = questionAnswerInfo[0];
+
+  const countInfo = await queryDatabase(`select COUNT(*) as "numberOfQuestions" from quiz_question_relation where quiz_id = ${quizId}`);
+
+  const { numberOfQuestions } = countInfo[0];
+
+  const finalQuestion = numberOfQuestions === questionNumber;
 
   const answers: Answer[] = multipleChoice ? await getAllAnswers(id, answerId, answer) : [{answerId, answer}];
 
-  const questionInfo: Question[] = [ { id , questionText , multipleChoice , answers } ];
+  const questionInfo: Question[] = [ { id , questionText , multipleChoice , finalQuestion , answers } ];
   return questionInfo;
 }
 

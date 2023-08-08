@@ -7,6 +7,7 @@ export type Question = {
   id: `${number}`,
   questionText: string,
   multipleChoice: boolean,
+  finalQuestion: boolean,
   answers: Answer[]
 }
 
