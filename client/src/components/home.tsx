@@ -28,17 +28,22 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-y-12;">
-      {categories.map((category) => (
-        <Link key={category.id} to={`/category/${category.id}`}>
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
-          >
-            {category.name}
-          </button>
-        </Link>
-      ))}
-    </div>
+    <section className="w-full bg-light">
+      <div className=" text-dark font-bold justify-center">
+        What category would you like to test your knowledge on?
+      </div>
+      <div className="flex flex-col gap-y-12;">
+        {categories.map((category) => (
+          <Link key={category.id} to={`/category/${category.id}`}>
+            <div className="w-full p-8 flex justify-center font-sans">
+              <button className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-2 rounded-full;">
+                {category.name}
+              </button>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 };
 

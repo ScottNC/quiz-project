@@ -43,13 +43,16 @@ const Question: React.FC = () => {
 
     const fetchQuestionData = async () => {
       try {
-
-        const currentQuestionResponse = await axios.get(`${BASE_URL}/currentquestion?roundId=${roundId}`);
-        const currentQuestion : CurrentQuestion[] = currentQuestionResponse.data;
-        setQuestionNumber(currentQuestion[0].answered + 1)
+        const currentQuestionResponse = await axios.get(
+          `${BASE_URL}/currentquestion?roundId=${roundId}`
+        );
+        const currentQuestion: CurrentQuestion[] = currentQuestionResponse.data;
+        setQuestionNumber(currentQuestion[0].answered + 1);
 
         const questionResponse = await axios.get(
-          `${BASE_URL}/question?quizId=${quizId}&questionNumber=${currentQuestion[0].answered + 1}`
+          `${BASE_URL}/question?quizId=${quizId}&questionNumber=${
+            currentQuestion[0].answered + 1
+          }`
         );
         setQuestions(questionResponse.data);
       } catch (error) {
@@ -81,7 +84,6 @@ const Question: React.FC = () => {
   };
 
   const nextQuestionButton = () => {
-  
     if (right !== null || wrong !== null) {
       if (questions[0].finalQuestion)
         return (
@@ -96,16 +98,15 @@ const Question: React.FC = () => {
         );
       else
         return (
-            <button
-              className="bg-blue-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-              onClick={nextQuestion}
-            >
-              Next Question
-            </button>
+          <button
+            className="bg-blue-300 hover:bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+            onClick={nextQuestion}
+          >
+            Next Question
+          </button>
         );
     } else return null;
   };
-  
 
   const getBackground = (idx: number | null) => {
     let backgroundColour = "bg-gray-300";
@@ -113,45 +114,54 @@ const Question: React.FC = () => {
     if (idx === right) backgroundColour = "bg-green-300";
     if (idx === wrong) backgroundColour = "bg-red-300";
 
-    return backgroundColour + " hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l";
+    return (
+      backgroundColour +
+      " hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+    );
   };
 
   const nextQuestion = async () => {
     try {
       if (roundId === undefined || questionNumber == undefined) return;
-  
+
       await axios({
-        method: 'put',
+        method: "put",
         url: `${BASE_URL}/answer`,
         params: {
           roundId,
           questionNumber,
           correct,
-        }
+        },
       });
-  
+
       if (!questions[0].finalQuestion) {
-        const response = await axios.get(`${BASE_URL}/question?quizId=${quizId}&questionNumber=${questionNumber + 1}`);
+        const response = await axios.get(
+          `${BASE_URL}/question?quizId=${quizId}&questionNumber=${
+            questionNumber + 1
+          }`
+        );
         setQuestions(response.data);
         setQuestionNumber((prevQuestionNumber) => prevQuestionNumber + 1);
         setRight(null);
         setWrong(null);
         setCorrect(null);
       }
-  
     } catch (error) {
       console.error("Error sending answer to server:", error);
     }
   };
-  
-  
 
   return (
     <>
-      <div className="flex flex-col gap-y-12">
+      <div className="bg-light w-full p-8 flex justify-center font-sans">
         {questions.map((question) => (
           <div key={question.id}>
-            <h1>{question.questionText}</h1>
+            <h1 className="text-dark font-bold justify-center">
+              Question {questionNumber}
+            </h1>
+            <div className="text-dark font-bold justify-center">
+              {question.questionText}
+            </div>
             {question.answers.map((answer, idx) => (
               <button
                 className={getBackground(idx)}

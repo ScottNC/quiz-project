@@ -20,9 +20,12 @@ const Subcategory: React.FC = () => {
     const fetchQuizzes = async () => {
       try {
         const response = await axios.get(BASE_URL + "/quiz", {
-          params: { categoryId: categoryId, numberOfReturns: number_of_returns },
+          params: {
+            categoryId: categoryId,
+            numberOfReturns: number_of_returns,
+          },
         });
-  
+
         setQuizzes(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,14 +37,15 @@ const Subcategory: React.FC = () => {
   }, [categoryId]);
 
   return (
-    <section>
-      <h1> Please select a Quiz</h1>
+    <section className="w-full bg-light">
+      <div className=" text-dark font-bold justify-center">
+        {" "}
+        Choose a quiz, and you're ready to go!
+      </div>
 
       {quizzes.map((quiz) => (
         <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
-          >
+          <button className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-4 rounded-l;">
             {quiz.name}
           </button>
         </Link>

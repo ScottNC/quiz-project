@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <section className="bg-green-200">
-      <h1 className="text-2xl text-green-800 font-bold"> Header Section</h1>
+    <section className="bg-light">
+      <h1 className="text-2xl text-darkest font-bold"> Header Section</h1>
     </section>
   );
 };

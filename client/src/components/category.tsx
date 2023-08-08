@@ -31,15 +31,15 @@ const Category: React.FC = () => {
   }, [categoryId]);
 
   return (
-    <section>
-      <h1> Please select a Category</h1>
+    <section className="w-full bg-light">
+      <div className=" text-dark font-bold justify-center">
+        {" "}
+        Please select a subcategory
+      </div>
 
       {subcategories.map((subcategory) => (
         <Link key={subcategory.id} to={`/subcategory/${categoryId}`}>
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
-            
-          >
+          <button className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-4 rounded-l;">
             {subcategory.name}
           </button>
         </Link>
