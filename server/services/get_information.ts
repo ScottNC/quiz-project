@@ -97,7 +97,11 @@ export async function getResult (roundId: QueryParams) {
 export async function getStats() {
 
   const stats = await queryDatabase(`SELECT (SELECT COUNT(*)::int FROM round WHERE status = 'finished' and created_at::date = now()::date) as "played_today"
-    , (SELECT COUNT(*)::int FROM round WHERE status = 'finished') as "played_total" 
+    , (SELECT SUM(correct)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS correct_today
+    , (SELECT SUM(answered)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS answered_today
+    , (SELECT COUNT(*)::int FROM round WHERE status = 'finished') as "played_total"
+    , (SELECT SUM(correct)::int FROM round WHERE status = 'finished') AS "correct_total"
+    , (SELECT SUM(answered)::int FROM round WHERE status = 'finished') AS "answered_total"
     , q.name AS "quiz", s.name AS "topic" FROM quiz q JOIN round r ON q.id = r.quiz_id
     JOIN subcategory_relation AS sr ON sr.quiz_id = q.id JOIN subcategory AS s ON sr.subcategory_id = s.id
     GROUP BY q.name, s.name ORDER BY COUNT(*) DESC LIMIT 1`);
