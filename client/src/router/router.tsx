@@ -11,6 +11,7 @@ import Quiz from "../components/quiz";
 import Question from "../components/question";
 import Result from "../components/result";
 import NotFound from "../components/notfound";
+import { SeeResult } from "../components/seeResult";
 
 export const QuizAppRouter: React.FC = () => (
   <Routes>
@@ -25,7 +26,8 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
       <Route path="quiz/:quizId" element={<Quiz />} />
       <Route path="question/:quizId/:roundId" element={<Question />} />
-      <Route path="result/:round" element={<Result />} />
+      <Route path="seeresult/:roundId" element={<SeeResult />} />
+      <Route path="result/:roundId" element={<Result />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </Routes>

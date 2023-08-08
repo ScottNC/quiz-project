@@ -85,7 +85,7 @@ const Question: React.FC = () => {
     if (right !== null || wrong !== null) {
       if (questions[0].finalQuestion)
         return (
-          <Link to={`/result/${roundId}`}>
+          <Link to={`/seeresult/${roundId}`}>
             <button
               className="bg-orange-300 hover:bg-orange-400 text-gray-800 font-bold py-2 px-4 rounded-l"
               onClick={nextQuestion}

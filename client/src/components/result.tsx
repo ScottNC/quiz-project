@@ -13,8 +13,8 @@ const Result: React.FC = () => {
   const [results, setResults] = useState<Results[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const { round } = useParams<{
-    round: string;
+  const { roundId } = useParams<{
+    roundId: string;
   }>();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Result: React.FC = () => {
     const fetchRound = async () => {
       try {
         const response = await axios.get(BASE_URL + "/result", {
-          params: { roundId: round },
+          params: { roundId : parseInt(roundId ?? '1') },
         });
         setResults(response.data);
       } catch (error) {
@@ -31,7 +31,7 @@ const Result: React.FC = () => {
       }
     };
     fetchRound();
-  }, [round]);
+  }, [roundId]);
 
   return results.length? (
     <section>
