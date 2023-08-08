@@ -39,10 +39,9 @@ const Subcategory: React.FC = () => {
       <h1> Please select a Quiz</h1>
 
       {quizzes.map((quiz) => (
-        <Link to={`/quiz/${quiz.id}`}>
+        <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;"
-            key={quiz.id}
           >
             {quiz.name}
           </button>

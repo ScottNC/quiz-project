@@ -7,7 +7,7 @@ interface PutAnswerResponse {
 }
 
 export const storeAnswer = async (
-  roundId: number,
+  roundId: string,
   questionNumber: number,
   correct: boolean
 ): Promise<PutAnswerResponse> => {
