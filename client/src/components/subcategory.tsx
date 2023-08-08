@@ -17,22 +17,21 @@ const Subcategory: React.FC = () => {
   const number_of_returns = 5; // how many quiz options we want to bring back
 
   useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const response = await axios.get(BASE_URL + "/quiz", {
+          params: { categoryId: categoryId, numberOfReturns: number_of_returns },
+        });
+  
+        setQuizzes(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
     if (effectCalled.current) return;
     fetchQuizzes();
     effectCalled.current = true;
-  }, []);
-
-  const fetchQuizzes = async () => {
-    try {
-      const response = await axios.get(BASE_URL + "/quiz", {
-        params: { categoryId: categoryId, numberOfReturns: number_of_returns },
-      });
-
-      setQuizzes(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  }, [categoryId]);
 
   return (
     <section>
