@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
+import { parse } from "dotenv";
 
 interface Start {
   id: number;
@@ -12,10 +13,13 @@ const Quiz: React.FC = () => {
   const [starts, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  // const { quizId } = useParams();
-  // const quiz_number = parseInt(quizId, 10);
+  //const { quizId } = useParams();
 
   const quizId = 77;
+
+  // if (quizId != undefined){
+  //   const quizNo = parseInt(quizId);
+  // }
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -25,9 +29,8 @@ const Quiz: React.FC = () => {
 
   const postStarts = async () => {
     try {
-      const response = await axios.post(BASE_URL + "/start", {
-        params: { quizId: quizId },
-      });
+      const response = await axios.post(BASE_URL + `/start/${quizId}`);
+
       setStarts(response.data);
     } catch (error) {
       console.error("Error posting data:", error);

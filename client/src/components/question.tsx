@@ -22,7 +22,7 @@ const Question: React.FC = () => {
   const [questions, setQuestions] = useState<QuestionProp[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const { quizId} = useParams();
+  const { quizId } = useParams();
 
   const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
 
@@ -34,9 +34,9 @@ const Question: React.FC = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/question`, {
-        params: { quizId, questionNumber },
-      });
+      const response = await axios.get(
+        `${BASE_URL}/question/${quizId}/${questionNumber}`
+      );
       setQuestions(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
