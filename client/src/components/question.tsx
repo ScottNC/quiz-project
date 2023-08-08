@@ -16,7 +16,17 @@ interface QuestionProp {
   answers: Array<Answer>;
 }
 
+interface CurrentQuestion {
+  answered: number;
+  status: string;
+}
+
 const Question: React.FC = () => {
+  const { quizId, roundId } = useParams<{
+    quizId: string;
+    roundId: string;
+  }>();
+
   const [questions, setQuestions] = useState<QuestionProp[]>([]);
   const effectCalled = useRef<boolean>(false);
 
@@ -26,28 +36,33 @@ const Question: React.FC = () => {
 
   const [questionNumber, setQuestionNumber] = useState<number>(1);
 
-  const { quizId, roundId } = useParams<{
-    quizId: string;
-    roundId: string;
-  }>();
-
   useEffect(() => {
     if (effectCalled.current) return;
     effectCalled.current = true;
 
     const fetchQuestionData = async () => {
       try {
-        const response = await axios.get(
-          `${BASE_URL}/question?quizId=${quizId}&questionNumber=${questionNumber}`
+
+        const currentQuestionResponse = await axios.get(`${BASE_URL}/currentquestion?roundId=${roundId}`);
+
+        const currentQuestion : CurrentQuestion[] = currentQuestionResponse.data;
+
+        setQuestionNumber(currentQuestion[0].answered + 1)
+
+        const questionResponse = await axios.get(
+          `${BASE_URL}/question?quizId=${quizId}&questionNumber=${currentQuestion[0].answered + 1}`
         );
-        setQuestions(response.data);
+        setQuestions(questionResponse.data);
+
+        
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchQuestionData();
-  }, [questionNumber, quizId]);
+  }, [questionNumber, quizId, roundId]);
 
   const checkAnswer = async (answer: Answer, index: number) => {
     try {

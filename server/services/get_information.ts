@@ -58,6 +58,14 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
   return otherAnswerInfo;
 }
 
+export async function getCurrentQuestion (roundId: QueryParams) {
+  const currentInfo = await queryDatabase('SELECT answered, status FROM round WHERE id = $1', [`${roundId}`]);
+
+  if (!currentInfo.length) throw new Error(`Round ${roundId} does not exist`);
+
+  return currentInfo;
+}
+
 export async function getCorrectAnswer (questionId: QueryParams) {
   const correctInfo = await queryDatabase('SELECT answer_id AS "correctAnswerId" FROM question WHERE id = $1', [`${questionId}`]);
 
