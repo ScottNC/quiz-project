@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const Nav: React.FC = () => (
   <div className="relative w-full max-w-sm overflow-y-scroll ">
     <nav className="container mx-auto flex justify-between text-dark font-bold">
-      <NavLink to="/home">Home</NavLink>
+      <NavLink to="/welcome">Home</NavLink>
 
       <NavLink to="/stats">Stats</NavLink>
 

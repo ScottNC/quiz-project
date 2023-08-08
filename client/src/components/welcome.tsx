@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Welcome = () => {
   return (
     <section className="w-full bg-light">
-      <h1 className="text-dark font-bold justify-center">
+      <h1 className="text-dark font-bold  justify-center">
         {" "}
         Welcome to In-Quiz-itive! Are you ready to test your knowledge?
       </h1>

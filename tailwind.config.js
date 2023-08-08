@@ -12,6 +12,10 @@ export default {
       light: "#CFD7C7",
       lightest: "#F6F1D1",
     },
+    fontFamily: {
+      poppins: ["Poppins", "sans-serif"],
+      satisfy: ["Satisfy", "cursive"],
+    },
   },
   plugins: [],
 };
