@@ -59,7 +59,7 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
           JOIN subcategory_relation AS sr ON a.id = sr.answer_id 
           WHERE sr.subcategory_id IN (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
           AND NOT a.id = ${answerId}
-          AND a.type_id = (SELECT type_id FROM question WHERE id = ${questionId})
+          AND a.type_id = (SELECT type_id FROM qu estion WHERE id = ${questionId})
       ) AS subquery_alias 
       ORDER BY RANDOM() LIMIT 3`;
 
@@ -92,4 +92,15 @@ export async function getResult (roundId: QueryParams) {
   const results : Result[] = await queryDatabase(`SELECT answered, correct, (${getCountQuery}) AS "questionCount" FROM round WHERE round.id = ${roundId}`);
 
   return results;
+}
+
+export async function getStats() {
+
+  const stats = await queryDatabase(`SELECT (SELECT COUNT(*)::int FROM round WHERE status = 'finished' and created_at::date = now()::date) as "played_today"
+    , (SELECT COUNT(*)::int FROM round WHERE status = 'finished') as "played_total" 
+    , q.name AS "quiz", s.name AS "topic" FROM quiz q JOIN round r ON q.id = r.quiz_id
+    JOIN subcategory_relation AS sr ON sr.quiz_id = q.id JOIN subcategory AS s ON sr.subcategory_id = s.id
+    GROUP BY q.name, s.name ORDER BY COUNT(*) DESC LIMIT 1`);
+
+  return stats;
 }
