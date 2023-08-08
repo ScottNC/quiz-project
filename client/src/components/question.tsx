@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { storeAnswer } from "./answer";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 interface Answer {
   id: number;
@@ -22,7 +22,7 @@ const Question: React.FC = () => {
   const [questions, setQuestions] = useState<QuestionProp[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const { quizId } = useParams();
+  const { quizId, roundId } = useParams();
 
   const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
 

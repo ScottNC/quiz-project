@@ -33,7 +33,7 @@ const Category: React.FC = () => {
 
   return (
     <section>
-      <h1> Please select a Sub Category</h1>
+      <h1> Please select a Category</h1>
 
       {subcategories.map((subcategory) => (
         <Link to={`/subcategory/${categoryId}`}>

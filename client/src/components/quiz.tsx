@@ -38,7 +38,7 @@ const Quiz: React.FC = () => {
     <div className="flex flex-col gap-y-12;">
       <h1> Are you ready to start </h1>
       {rounds.map((round) => (
-        <Link to={`/start/${quizId}&${round.id}`}>
+        <Link to={`/question/${quizId}/${round.id}`}>
           <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
             Start
           </button>

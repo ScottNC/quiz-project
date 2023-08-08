@@ -8,7 +8,6 @@ import Home from "../components/home";
 import Category from "../components/category";
 import SubCategory from "../components/subcategory";
 import Quiz from "../components/quiz";
-import Start from "../components/start";
 import Question from "../components/question";
 import Result from "../components/result";
 import NotFound from "../components/notfound";
@@ -24,9 +23,8 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="home" element={<Home />} />
       <Route path="category/:categoryId" element={<Category />} />
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
-      <Route path="quiz/:quizId" element={<Quiz />} />
-      <Route path="start/:quizId:roundId" element={<Start />} />
-      <Route path="question/:quizId:roundId" element={<Question />} />
+      <Route path="quiz/:categoryId" element={<Quiz />} />
+      <Route path="question/:quizId/:roundId" element={<Question />} />
       <Route path="result" element={<Result />} />
       <Route path="*" element={<NotFound />} />
     </Route>

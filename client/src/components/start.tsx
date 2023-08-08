@@ -51,7 +51,7 @@ const Start: React.FC = () => {
         Are you ready for the First Question?
       </h1>
 
-      <Link to={`/question/${quizId}:${roundId}`}>
+      <Link to={`/question/${quizId}`}>
         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
           Yes
         </button>
