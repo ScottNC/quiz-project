@@ -37,7 +37,7 @@ export async function getQuestion (quizId: QueryParams, questionNumber: QueryPar
 
   const { questionText, id, answerId, answer, multipleChoice } = questionAnswerInfo[0];
 
-  const answers: Answer[] = multipleChoice ? await getAllAnswers(id, answerId, answer) : [{answerId, answer, correct: true}];
+  const answers: Answer[] = multipleChoice ? await getAllAnswers(id, answerId, answer) : [{answerId, answer}];
 
   const questionInfo: Question[] = [ { id , questionText , multipleChoice , answers } ];
   return questionInfo;
@@ -45,7 +45,7 @@ export async function getQuestion (quizId: QueryParams, questionNumber: QueryPar
 
 async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, answer: string) {
 
-  const otherAnswerQuery : string = `SELECT a.id AS "answerId", a.text AS answer, false AS correct FROM answer AS a 
+  const otherAnswerQuery : string = `SELECT a.id AS "answerId", a.text AS answer FROM answer AS a 
                                       JOIN subcategory_relation AS sr ON a.id = sr.answer_id AND sr.subcategory_id IN 
                                       (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
                                       WHERE NOT a.id = ${answerId} AND a.type_id  = (SELECT type_id FROM question 
@@ -53,7 +53,7 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
 
   const otherAnswerInfo : Answer[] = await queryDatabase(otherAnswerQuery);
 
-  otherAnswerInfo.splice(Math.floor(Math.random() * 4), 0, {answerId, answer, correct: true})
+  otherAnswerInfo.splice(Math.floor(Math.random() * 4), 0, {answerId, answer})
 
   return otherAnswerInfo;
 }
