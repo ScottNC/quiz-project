@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import { getCategory, getQuestion, getQuiz, getResult, getSubcategory } from "../services/get_information";
+import { getCategory, getCorrectAnswer, getQuestion, getQuiz, getResult, getSubcategory } from "../services/get_information";
 import { postStart } from "../services/post_information";
 import { putAnswer } from "../services/put_information";
 import { isBooleanString, isNumberString } from "../helpers/check";
@@ -55,10 +55,26 @@ export function addAPIRoutes(app: Express) {
       const quizId = req.query?.quizId;
       const questionNumber = req.query?.questionNumber;
 
-      if (!isNumberString(quizId)) res.status(400).json({ error : 'Must contain quidId and it must be a number' });
+      if (!isNumberString(quizId)) res.status(400).json({ error : 'Must contain quizId and it must be a number' });
       else if (!isNumberString(questionNumber)) res.status(400).json({ error : 'Must contain questionNumber and it must be a number' });
       else {
         const result = await getQuestion(quizId, questionNumber);
+        res.status(200).json(result);
+      }
+    } catch (error) {
+      console.error('Error while getting quizzes', error);
+      res.status(500).json({ error });
+    }
+  });
+
+  console.log('📨  Adding GET correctanswer route...');
+	apiRouter.get('/correctanswer', async(req: Request, res: Response) => {
+    try {
+      const questionId = req.query?.questionId;
+
+      if (!isNumberString(questionId)) res.status(400).json({ error : 'Must contain questionId and it must be a number' });
+      else {
+        const result = await getCorrectAnswer(questionId);
         res.status(200).json(result);
       }
     } catch (error) {

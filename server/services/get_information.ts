@@ -58,6 +58,14 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
   return otherAnswerInfo;
 }
 
+export async function getCorrectAnswer (questionId: QueryParams) {
+  const correctInfo = await queryDatabase('SELECT answer_id AS "correctAnswerId" FROM question WHERE id = $1', [`${questionId}`]);
+
+  if (!correctInfo.length) throw new Error(`Question ${questionId} does not exist`);
+
+  return correctInfo;
+}
+
 export async function getResult (roundId: QueryParams) {
 
   const getCountQuery = `SELECT COUNT(*)::int FROM quiz_question_relation AS qqr JOIN round AS r ON r.quiz_id = qqr.quiz_id WHERE r.id = ${roundId}`;
