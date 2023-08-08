@@ -3,32 +3,32 @@ import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
 
-interface Round {
+interface Start {
   id: number;
-  quiz_id: number;
-  answered: number;
-  correct: number;
-  status: string;
+  message: string;
 }
 
 const Quiz: React.FC = () => {
-  const [rounds, setRounds] = useState<Round[]>([]);
+  const [starts, setStarts] = useState<Start[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const { quizId } = useParams();
+  // const { quizId } = useParams();
+  // const quiz_number = parseInt(quizId, 10);
+
+  const quizId = 77;
 
   useEffect(() => {
     if (effectCalled.current) return;
-    postRounds();
+    postStarts();
     effectCalled.current = true;
   }, []);
 
-  const postRounds = async () => {
+  const postStarts = async () => {
     try {
       const response = await axios.post(BASE_URL + "/start", {
         params: { quizId: quizId },
       });
-      setRounds(response.data);
+      setStarts(response.data);
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -37,13 +37,12 @@ const Quiz: React.FC = () => {
   return (
     <div className="flex flex-col gap-y-12;">
       <h1> Are you ready to start </h1>
-      {rounds.map((round) => (
-        <Link to={`/question/${quizId}/${round.id}`}>
-          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
-            Start
-          </button>
-        </Link>
-      ))}
+
+      <Link to={`/question/${quizId}`}>
+        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l;">
+          Start
+        </button>
+      </Link>
     </div>
   );
 };

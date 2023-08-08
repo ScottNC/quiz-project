@@ -22,7 +22,7 @@ const Question: React.FC = () => {
   const [questions, setQuestions] = useState<QuestionProp[]>([]);
   const effectCalled = useRef<boolean>(false);
 
-  const { quizId, roundId } = useParams();
+  const { quizId} = useParams();
 
   const [questionNumber, setQuestionNumber] = useState(1); // Use state to keep track of the current question number
 
@@ -72,17 +72,6 @@ const Question: React.FC = () => {
             </button>
           ))}
         </div>
-
-        //   <ul>
-        //     {question.answers.map((answer) => (
-        //       <li key={answer.answerId}>
-        //         <button onClick={() => handleAnswer(answer.correct)}>
-        //           {answer.answer}
-        //         </button>
-        //       </li>
-        //     ))}
-        //   </ul>
-        // </div>
       ))}
     </div>
   );
