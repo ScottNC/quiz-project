@@ -59,7 +59,7 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
           JOIN subcategory_relation AS sr ON a.id = sr.answer_id 
           WHERE sr.subcategory_id IN (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
           AND NOT a.id = ${answerId}
-          AND a.type_id = (SELECT type_id FROM qu estion WHERE id = ${questionId})
+          AND a.type_id = (SELECT type_id FROM question WHERE id = ${questionId})
       ) AS subquery_alias 
       ORDER BY RANDOM() LIMIT 3`;
 
