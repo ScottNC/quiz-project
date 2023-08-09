@@ -1,6 +1,6 @@
 const Settings = () => {
   return (
-    <section className="w-full bg-light">
+    <section className="w-full h-screen bg-light">
       <h1 className="pt-6 text-2xl  text-dark font-bold text-center">
         Settings
       </h1>
