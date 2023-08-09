@@ -1,10 +1,10 @@
 const NotFound = () => {
   return (
-    <section className="w-full bg-light">
-      <div className="pt-6 text-2xl text-dark font-bold text-center">
+    <section className="w-full h-screen bg-light">
+      <div className="pt-8 text-2xl text-dark font-bold text-center">
         Whoops. Let's get you back home
       </div>
-      <div className="bg-light w-full p-8 flex justify-center font-sans">
+      <div className="bg-light w-full p-12 pt-20 flex justify-center font-sans">
         <a href="/home">
           <button
             className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
