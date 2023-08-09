@@ -1,7 +1,14 @@
+import Nav from "../../components/nav/nav";
 const Footer = () => {
   return (
-    <section className="bg-green-200">
-      <h1 className="text-2xl text-green-800 font-bold"> Footer Section</h1>
+    <section
+      className="bg-light w-screen  
+    fixed
+    inset-x-0
+    bottom-0
+    p-4"
+    >
+      <Nav />
     </section>
   );
 };

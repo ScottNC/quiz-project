@@ -12,7 +12,6 @@ export async function populateQuestions() {
   await queryDatabase('DELETE FROM subcategory_relation');
   await queryDatabase('DELETE FROM quiz_question_relation');
   await queryDatabase('DELETE FROM question');
-  await queryDatabase('DELETE FROM answer');
   await queryDatabase('DELETE FROM round');
   await queryDatabase('DELETE FROM quiz');
 

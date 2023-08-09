@@ -4,11 +4,16 @@ import Footer from "../footer/footer";
 
 const MainLayout = () => (
   <>
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-    <Footer />
+    <div className=" max-w-screen max-h-screen bg-light">
+      <Header />
+      <main className="h-screen">
+        <Outlet />
+      </main>
+      <div className="p-6">
+      
+      </div>
+      <Footer />
+    </div>
   </>
 );
 

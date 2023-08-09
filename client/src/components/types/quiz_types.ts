@@ -33,6 +33,7 @@ export type Result = {
   questionCount: number
 }
 
+
 export type CurrentQuestion = {
   answered: number;
   status: string;
