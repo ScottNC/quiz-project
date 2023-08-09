@@ -28,15 +28,21 @@ const Home: React.FC = () => {
   };
 
   return (
-    <section className="w-full bg-light">
-      <div className=" text-dark font-bold justify-center">
-        What category would you like to test your knowledge on?
+    <section className="p-6 w-full bg-light">
+      <div className="text-2xl text-dark font-bold text-center">
+        Choose from this month's quiz categories
       </div>
       <div className="flex flex-col gap-y-12;">
         {categories.map((category) => (
           <Link key={category.id} to={`/category/${category.id}`}>
             <div className="w-full p-8 flex justify-center font-sans">
-              <button className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-2 rounded-full;">
+              <button
+                className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
+    active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
+    active:border-b-[0px]
+    transition-all duration-150 [box-shadow:0_10px_0_0_#40798C,0_15px_0_0_#1b70f841]
+    border-b-[1px] border-blue-400"
+              >
                 {category.name}
               </button>
             </div>
