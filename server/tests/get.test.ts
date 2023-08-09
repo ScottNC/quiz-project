@@ -1,4 +1,4 @@
-import { getCategory, getQuiz, getSubcategory } from '../services/get_information';
+import { getCategory, getName, getQuiz, getSubcategory } from '../services/get_information';
 import * as db from '../db';
 
 jest.mock('../db');
@@ -96,4 +96,30 @@ describe('getQuiz', () => {
   })
 });
 
+describe('getName', () => {
+  it('should return quiz name', async () => {
+    const mockResolvedValue = [
+      { name: 'Horror Quiz' },
+    ];
+
+    const queryDatabaseMock = jest.spyOn(db, 'queryDatabase');
+    queryDatabaseMock.mockResolvedValue(mockResolvedValue);
+    
+    const result = await getName('1');
+
+    expect(result).toEqual([
+      { name: 'Horror Quiz' },
+    ]);
+
+    queryDatabaseMock.mockRestore();
+  });
+
+  it('should handle an error', async () => {
+    const queryDatabaseMock = jest.spyOn(db, 'queryDatabase');
+
+    queryDatabaseMock.mockRejectedValue(new Error('PostGreSQL Error'))
+
+    await expect(getName('1')).rejects.toThrow('PostGreSQL Error');
+  })
+});
 
