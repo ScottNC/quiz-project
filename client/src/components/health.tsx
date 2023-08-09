@@ -18,9 +18,9 @@ const Health: React.FC = () => {
   }, []);
 
   return (
-    <section className="w-full bg-light">
-      <h1 className="text-2xl text-dark font-bold  text-center">Welcome to the Health Page</h1>
-      <h2 className="text-2xl text-dark font-bold  text-center">{health}</h2>
+    <section className="w-full h-screen bg-light">
+      <h1 className="text-2xl text-dark font-bold p-12 text-center">Welcome to the Health Page</h1>
+      <h2 className="text-2xl text-dark font-bold p-4 text-center">{health}</h2>
     </section>
   );
 };
