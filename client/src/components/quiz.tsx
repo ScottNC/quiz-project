@@ -42,12 +42,12 @@ const QuizStart: React.FC = () => {
 
   if (!roundId)
     return (
-      <div className="bg-light w-full flex flex-col gap-y-12;">
+      <div className="bg-light h-screen w-full flex flex-col gap-y-12;">
       </div>
     );
 
   return (
-    <section className="w-full bg-light justify-center">
+    <section className="w-full bg-light h-screen justify-center">
       <div className="pt-6 text-2xl text-dark font-bold text-center">
         <div>
           {name.map((nameInfo: Name) => <h1>{nameInfo.name}</h1>)}
