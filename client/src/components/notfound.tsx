@@ -1,7 +1,7 @@
 const NotFound = () => {
   return (
     <section className="w-full bg-light">
-      <div className="text-dark font-bold justify-center">
+      <div className="pt-6 text-2xl text-dark font-bold text-center">
         Whoops. Let's get you back home
       </div>
       <div className="bg-light w-full p-8 flex justify-center font-sans">

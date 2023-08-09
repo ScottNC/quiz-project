@@ -166,10 +166,10 @@ const Question: React.FC = () => {
       <div className="bg-light w-full p-4 flex justify-center font-sans">
         {questions.map((question) => (
           <div key={question.id}>
-            <h1 className="text-dark font-bold justify-center">
+            <h1 className="text-2xl text-dark font-bold text-center">
               Question {questionNumber}
             </h1>
-            <div className="text-dark font-bold justify-center">
+            <div className="pt-2 pb-6 text-dark font-bold text-center">
               {question.questionText}
             </div>
             {question.answers.map((answer, idx) => (
