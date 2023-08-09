@@ -42,9 +42,9 @@ const Result: React.FC = () => {
     </section>
   ) : (
     <section>
-      <h2 >
+      <p>
         Loading Results...
-      </h2>
+      </p>
     </section>
   );
 };
