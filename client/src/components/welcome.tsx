@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Welcome = () => {
   return (
-    <section className="p-8 w-full bg-light justify-center">
+    <section className="p-8  h-screen w-full bg-light justify-center">
       <h1 className="text-2xl text-dark font-bold  text-center ">
         Welcome to in-
         <span className="font-satisfy font-bold text-center">Quiz</span>

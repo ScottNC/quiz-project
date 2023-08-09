@@ -102,14 +102,14 @@ const Questions: React.FC = () => {
   };
 
   const getBackground = (idx: number | null) => {
-    let backgroundColour = "bg-darkest";
+    let backgroundColour = "bg-dark";
 
     if (idx === right) backgroundColour = "bg-correct";
     if (idx === wrong) backgroundColour = "bg-wrong";
 
     return (
       backgroundColour +
-      " hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+      "p-3 w-40 h-16 text-dark font-bold rounded-lg cursor-pointer select-none active:translate-y-2 active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841] active:border-b-[0px] transition-all duration-150 [box-shadow:0_10px_0_0_#40798C,0_15px_0_0_#1b70f841] border-b-[1px] border-blue-400"
     );
   };
 
@@ -146,7 +146,7 @@ const Questions: React.FC = () => {
 
   return (
     <>
-      <div className="bg-light w-full p-4 flex justify-center font-sans">
+      <div className="bg-light w-full h-screen p-4 flex justify-center font-sans">
         {questions.map((question) => (
           <div key={question.id}>
             <h1 className="text-2xl text-dark font-bold text-center">
@@ -156,13 +156,7 @@ const Questions: React.FC = () => {
               {question.questionText}
             </div>
             {question.answers.map((answer, idx) => (
-              <div
-                className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
-              active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
-              active:border-b-[0px]
-              transition-all duration-150 [box-shadow:0_10px_0_0_#40798C,0_15px_0_0_#1b70f841]
-              border-b-[1px] border-blue-400"
-              >
+              <div className="w-full p-2 flex justify-center font-sans">
                 <button
                   className={getBackground(idx)}
                   key={answer.answerId}

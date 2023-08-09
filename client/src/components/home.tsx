@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   border-b-[1px] border-blue-400`;
 
   return (
-    <section className="p-6 w-full bg-light">
+    <section className="p-6 h-screen w-full bg-light">
       <div className="text-2xl text-dark font-bold text-center">
         Choose from this month's quiz categories
       </div>
