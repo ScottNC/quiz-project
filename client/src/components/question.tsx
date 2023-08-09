@@ -46,7 +46,7 @@ const Questions: React.FC = () => {
     fetchQuestionData();
   }, [questionNumber, quizId, roundId]);
 
-  const checkAnswer = async (answer: Answer, index: number) => {
+  const checkAnswer = async (answer: Answer, index: number, question: Question) => {
     try {
       const response = await axios.get(
         `${BASE_URL}/correctanswer?questionId=${questions[0]?.id}`
@@ -58,6 +58,10 @@ const Questions: React.FC = () => {
         setCorrect(true);
         setRight(index);
       } else {
+        question.answers.forEach((selectedAnswer: Answer, selectedIdx: number) => {
+          if (correctAnswerId === selectedAnswer.answerId)
+            setRight(selectedIdx);
+        })
         setCorrect(false);
         setWrong(index);
       }
@@ -164,7 +168,7 @@ const Questions: React.FC = () => {
                 <button
                   className={getBackground(idx)}
                   key={answer.answerId}
-                  onClick={() => checkAnswer(answer, idx)}
+                  onClick={() => checkAnswer(answer, idx, question)}
                   disabled={correct !== null}
                 >
                   {answer.answer}
