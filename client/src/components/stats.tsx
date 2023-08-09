@@ -73,7 +73,7 @@ const StatsPage: React.FC = () => {
       </div>
     </section>
   ) : (
-    <section>
+    <section className="w-full h-screen bg-light">
     </section>
   );
 };
