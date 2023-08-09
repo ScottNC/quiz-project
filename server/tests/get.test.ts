@@ -1,5 +1,5 @@
 import { getCategory } from '../services/get_information';
-import * as db from '../db'; // Import the entire module for mocking
+import * as db from '../db';
 
 jest.mock('../db');
 
@@ -11,7 +11,6 @@ describe('getCategory', () => {
       { id: 3, name: 'Geography' },
     ];
 
-    // Mock the queryDatabase function using jest.spyOn
     const queryDatabaseMock = jest.spyOn(db, 'queryDatabase');
     queryDatabaseMock.mockResolvedValue(mockResolvedValue);
     
@@ -23,7 +22,14 @@ describe('getCategory', () => {
       { id: 3, name: 'Geography' },
     ]);
 
-    // Restore the original implementation of queryDatabase after the test
     queryDatabaseMock.mockRestore();
   });
+
+  it('should handle an error', async () => {
+    const queryDatabaseMock = jest.spyOn(db, 'queryDatabase');
+
+    queryDatabaseMock.mockRejectedValue(new Error('PostGreSQL Error'))
+
+    await expect(getCategory()).rejects.toThrow('PostGreSQL Error');
+  })
 });
