@@ -1,5 +1,4 @@
 import Nav from "../../components/nav/nav";
-
 const Footer = () => {
   return (
     <section
