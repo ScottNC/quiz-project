@@ -95,7 +95,7 @@ export async function getCorrectAnswer (questionId: QueryParams) {
 export async function getResult (roundId: QueryParams) {
 
   const getCountQuery = `SELECT COUNT(*)::int FROM quiz_question_relation AS qqr JOIN round AS r ON r.quiz_id = qqr.quiz_id WHERE r.id = ${roundId}`;
-  const results : Result[] = await queryDatabase(`SELECT answered, correct, (${getCountQuery}) AS "questionCount" FROM round WHERE round.id = ${roundId}`);
+  const results : Result[] = await queryDatabase(`SELECT answered, correct, quiz_id AS "quizId", (${getCountQuery}) AS "questionCount" FROM round WHERE round.id = ${roundId}`);
 
   return results;
 }
