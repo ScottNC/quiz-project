@@ -6,7 +6,7 @@ export const SeeResult: React.FC = () => {
   }>();
 
   return (
-    <section className="w-full bg-light">
+    <section className="w-full h-screen bg-light">
       <div className="w-full p-8 flex justify-center font-sans">
       <Link to={`/results/${roundId}`}>
           <button

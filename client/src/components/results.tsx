@@ -31,8 +31,8 @@ const Results: React.FC = () => {
   
 
   return results.length ? (
-    <section className="w-full bg-light">
-      <div className="text-dark font-bold">
+    <section className="w-full h-screen bg-light">
+      <div className="text-dark font-bold p-10 text-center">
         You scored {results[0].correct} out of {results[0].questionCount}!
         <p>Try another quiz, or see if you can beat your score?</p>
       </div>
@@ -64,7 +64,7 @@ const Results: React.FC = () => {
       </div>
     </section>
   ) : (
-    <section className="w-full bg-light">
+    <section className="w-full h-screen bg-light">
     </section>
   );
 };
