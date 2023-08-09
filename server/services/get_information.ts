@@ -108,3 +108,9 @@ export async function getStats() {
 
   return stats;
 }
+
+export async function getRandom () {
+  const results : Quiz[] = await queryDatabase(`SELECT id, name FROM quiz ORDER BY RANDOM() LIMIT 1`);
+
+  return results;
+}
