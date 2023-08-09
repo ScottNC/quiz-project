@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { Link } from "react-router-dom";
+import { Quiz } from "./types/quiz_types";
 
 interface Category {
   id: number;
@@ -11,6 +12,8 @@ interface Category {
 const Home: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const effectCalled = useRef<boolean>(false);
+
+  const [randomQuiz, setRandomQuiz] = useState<Quiz[]>([]);
 
   useEffect(() => {
     if (effectCalled.current) return;
@@ -22,6 +25,9 @@ const Home: React.FC = () => {
     try {
       const response = await axios.get(BASE_URL + "/category");
       setCategories(response.data);
+
+      const randomResponse = await axios.get(BASE_URL + "/random");
+      setRandomQuiz(randomResponse.data)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -51,6 +57,19 @@ const Home: React.FC = () => {
             </div>
           </Link>
         ))}
+        {
+          randomQuiz.map((quiz) => (
+            <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
+            <div className={divButtonClass}>
+              <button
+                className={buttonClass}
+              >
+                Choose quiz for me
+              </button>
+            </div>
+          </Link>
+          ))
+        }
       </div>
     </section>
   );
