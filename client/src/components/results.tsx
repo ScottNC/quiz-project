@@ -28,13 +28,24 @@ const Results: React.FC = () => {
     fetchRound();
   }, [roundId]);
 
-  
+  const getComment = (correct: number, total: number) => {
+    const ratio = correct/total;
 
+    if (ratio <= 0.4)
+      return 'Oh dear maybe try again 😞';
+    if (ratio <= 0.7)
+      return 'Not bad 🤔';
+    if (ratio < 1)
+      return 'Nice Work 😄'
+
+    return 'You Aced It Try Another Quiz!!! 🤩'
+  }
+  
   return results.length ? (
     <section className="w-full h-screen bg-light">
       <div className="text-dark font-bold p-10 text-center">
         You scored {results[0].correct} out of {results[0].questionCount}!
-        <p>Try another quiz, or see if you can beat your score?</p>
+        <p>{getComment(results[0].correct, results[0].questionCount)}</p>
       </div>
       <div className="bg-light w-full p-8 flex justify-center font-sans">
         <Link to={`/quiz/${results[0].quizId}`}>
