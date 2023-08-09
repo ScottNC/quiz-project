@@ -27,10 +27,12 @@ export type Subcategory = {
 }
 
 export type Result = {
+  quizId: number,
   answered: number,
   correct: number,
   questionCount: number
 }
+
 
 export type CurrentQuestion = {
   answered: number;
