@@ -11,8 +11,8 @@ export default {
       dark: "#70A9A1",
       light: "#CFD7C7",
       lightest: "#F6F1D1",
-      wrong: "#F35B04",
-      correct: "#61E786",
+      wrong: "#AD1313",
+      correct: "#24A31D",
     },
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
