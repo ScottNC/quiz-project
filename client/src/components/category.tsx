@@ -2,11 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
-
-interface Subcategory {
-  id: number;
-  name: string;
-}
+import { Subcategory } from "./types/quiz_types";
 
 const Category: React.FC = () => {
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);

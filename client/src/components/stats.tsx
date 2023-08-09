@@ -2,19 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams } from "react-router-dom";
+import { Stats } from "./types/quiz_types";
 
-interface Stats {
-  played_today: number;
-  played_total: number;
-  correct_today: number;
-  correct_total: number;
-  answered_today: number;
-  answered_total: number;
-  quiz: string;
-  topic: string;
-}
-
-const Stats: React.FC = () => {
+const StatsPage: React.FC = () => {
   const [stats, setStats] = useState<Stats[]>([]);
   const effectCalled = useRef<boolean>(false);
 
@@ -84,4 +74,4 @@ const Stats: React.FC = () => {
   );
 };
 
-export default Stats;
+export default StatsPage;

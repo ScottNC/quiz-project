@@ -7,12 +7,12 @@ import Settings from "../components/settings";
 import Home from "../components/home";
 import Category from "../components/category";
 import SubCategory from "../components/subcategory";
-import Quiz from "../components/quiz";
-import Question from "../components/question";
-import Result from "../components/result";
+import Questions from "../components/question";
+import Results from "../components/results";
 import NotFound from "../components/notfound";
 import { SeeResult } from "../components/seeResult";
-import Stats from "../components/stats";
+import StatsPage from "../components/stats";
+import QuizStart from "../components/quiz";
 
 export const QuizAppRouter: React.FC = () => (
   <Routes>
@@ -20,16 +20,16 @@ export const QuizAppRouter: React.FC = () => (
       <Route index element={<Welcome />} />
       <Route path="welcome" element={<Welcome />} />
       <Route path="health" element={<Health />} />
-      <Route path="stats" element={<Stats />} />
+      <Route path="stats" element={<StatsPage />} />
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
       <Route path="home" element={<Home />} />
       <Route path="category/:categoryId" element={<Category />} />
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
-      <Route path="quiz/:quizId" element={<Quiz />} />
-      <Route path="question/:quizId/:roundId" element={<Question />} />
+      <Route path="quiz/:quizId" element={<QuizStart />} />
+      <Route path="question/:quizId/:roundId" element={<Questions />} />
       <Route path="seeresult/:roundId" element={<SeeResult />} />
-      <Route path="result/:roundId" element={<Result />} />
+      <Route path="results/:roundId" element={<Results />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </Routes>

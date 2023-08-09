@@ -2,15 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams } from "react-router-dom";
+import { Result } from "./types/quiz_types";
 
-interface Results {
-  answered: number;
-  correct: number;
-  questionCount: number;
-}
-
-const Result: React.FC = () => {
-  const [results, setResults] = useState<Results[]>([]);
+const Results: React.FC = () => {
+  const [results, setResults] = useState<Result[]>([]);
   const effectCalled = useRef<boolean>(false);
 
   const { roundId } = useParams<{
@@ -60,4 +55,4 @@ const Result: React.FC = () => {
   );
 };
 
-export default Result;
+export default Results;

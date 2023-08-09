@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
 
-const Quiz: React.FC = () => {
+const QuizStart: React.FC = () => {
   const [roundId, setRoundId] = useState<number | null>(null);
   const effectCalled = useRef<boolean>(false);
 
@@ -62,4 +62,4 @@ const Quiz: React.FC = () => {
   );
 };
 
-export default Quiz;
+export default QuizStart;

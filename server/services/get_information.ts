@@ -1,6 +1,6 @@
 import { queryDatabase } from "../db";
 import { QueryParams, isNumberString } from "../helpers/check";
-import { Answer, Category, Question, Quiz, Result, Subcategory } from "../types/quiz_types";
+import { Answer, Category, CorrectAnswer, CurrentQuestion, Question, Quiz, Result, Stats, Subcategory } from "../types/quiz_types";
 
 export async function getCategory () {
   const categories : Category[] = await queryDatabase('SELECT id, name FROM category');
@@ -71,7 +71,7 @@ async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, ans
 }
 
 export async function getCurrentQuestion (roundId: QueryParams) {
-  const currentInfo = await queryDatabase('SELECT answered, status FROM round WHERE id = $1', [`${roundId}`]);
+  const currentInfo: CurrentQuestion[] = await queryDatabase('SELECT answered, status FROM round WHERE id = $1', [`${roundId}`]);
 
   if (!currentInfo.length) throw new Error(`Round ${roundId} does not exist`);
 
@@ -79,7 +79,7 @@ export async function getCurrentQuestion (roundId: QueryParams) {
 }
 
 export async function getCorrectAnswer (questionId: QueryParams) {
-  const correctInfo = await queryDatabase('SELECT answer_id AS "correctAnswerId" FROM question WHERE id = $1', [`${questionId}`]);
+  const correctInfo: CorrectAnswer[] = await queryDatabase('SELECT answer_id AS "correctAnswerId" FROM question WHERE id = $1', [`${questionId}`]);
 
   if (!correctInfo.length) throw new Error(`Question ${questionId} does not exist`);
 
@@ -96,7 +96,7 @@ export async function getResult (roundId: QueryParams) {
 
 export async function getStats() {
 
-  const stats = await queryDatabase(`SELECT (SELECT COUNT(*)::int FROM round WHERE status = 'finished' and created_at::date = now()::date) as "played_today"
+  const stats : Stats[] = await queryDatabase(`SELECT (SELECT COUNT(*)::int FROM round WHERE status = 'finished' and created_at::date = now()::date) as "played_today"
     , (SELECT SUM(correct)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS correct_today
     , (SELECT SUM(answered)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS answered_today
     , (SELECT COUNT(*)::int FROM round WHERE status = 'finished') as "played_total"

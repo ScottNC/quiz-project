@@ -2,33 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { Link, useParams } from "react-router-dom";
+import { Answer, CurrentQuestion, Question } from "./types/quiz_types";
 
-interface Answer {
-  id: number;
-  answerId: number;
-  answer: string;
-}
 
-interface QuestionProp {
-  id: number;
-  questionText: string;
-  multipleChoice: boolean;
-  finalQuestion: boolean;
-  answers: Array<Answer>;
-}
-
-interface CurrentQuestion {
-  answered: number;
-  status: string;
-}
-
-const Question: React.FC = () => {
+const Questions: React.FC = () => {
   const { quizId, roundId } = useParams<{
     quizId: string;
     roundId: string;
   }>();
 
-  const [questions, setQuestions] = useState<QuestionProp[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const effectCalled = useRef<boolean>(false);
 
   const [correct, setCorrect] = useState<boolean | null>(null);
@@ -182,7 +165,7 @@ const Question: React.FC = () => {
               >
                 <button
                   className={getBackground(idx)}
-                  key={answer.id}
+                  key={answer.answerId}
                   onClick={() => checkAnswer(answer, idx)}
                   disabled={correct !== null}
                 >
@@ -198,4 +181,4 @@ const Question: React.FC = () => {
   );
 };
 
-export default Question;
+export default Questions;
