@@ -70,24 +70,26 @@ const Questions: React.FC = () => {
     if (right !== null || wrong !== null) {
       if (questions[0].finalQuestion)
         return (
-          <section className="w-full bg-light">
-            <div className="w-full p-8 flex justify-center font-sans">
+          <div className="w-full bg-light p-8 flex justify-center font-sans">
             <Link to={`/seeresult/${roundId}`}>
               
                 <button
-                  className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-4 rounded-l;"
+                  className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
+                  active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
+                  active:border-b-[0px]
+                  transition-all duration-150 [box-shadow:0_10px_0_0_#40798C,0_15px_0_0_#1b70f841]
+                  border-b-[1px] border-blue-400"
                   onClick={nextQuestion}
                 >
                   Finish Quiz
                 </button>
               
             </Link>
-            </div>
-          </section>
+          </div>
         );
       else
         return (
-          <section className="w-full bg-light p-8 flex justify-center font-sans">
+          <div className="w-full bg-light p-8 flex justify-center font-sans">
             <button
               className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
               active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -98,7 +100,7 @@ const Questions: React.FC = () => {
             >
               Next Question
             </button>
-          </section>
+          </div>
         );
     } else return null;
   };
@@ -148,7 +150,7 @@ const Questions: React.FC = () => {
 
   return (
     <>
-      <div className="bg-light w-full h-screen p-4 flex justify-center font-sans">
+      <section className="bg-light w-full h-screen p-4 flex justify-center font-sans">
         {questions.map((question) => (
           <div key={question.id}>
             <h1 className="text-2xl text-dark font-bold text-center">
@@ -173,7 +175,7 @@ const Questions: React.FC = () => {
           </div>
         ))}
         
-      </div>
+      </section>
     </>
   );
 };
