@@ -49,9 +49,7 @@ const QuizStart: React.FC = () => {
   return (
     <section className="w-full bg-light h-screen justify-center">
       <div className="pt-6 text-2xl text-dark font-bold text-center">
-        <div>
-          {name.map((nameInfo: Name) => <h1>{nameInfo.name}</h1>)}
-        </div>
+        {name.map((nameInfo: Name) => <h1 key={nameInfo.name}>{nameInfo.name}</h1>)}
         <h2>Are you ready to begin?</h2>
         <div className="bg-light w-full p-8 flex justify-center font-sans"></div>
         <Link to={`/question/${quizId}/${roundId}`}>

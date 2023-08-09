@@ -47,8 +47,8 @@ const Home: React.FC = () => {
       </div>
       <div className="flex flex-col gap-y-12;">
         {categories.map((category) => (
-          <div className={divButtonClass}>
-          <Link key={category.id} to={`/subcategory/${category.id}`}>
+          <div key={category.id} className={divButtonClass}>
+          <Link to={`/subcategory/${category.id}`}>
               <button
                 className={buttonClass}
               >
@@ -59,8 +59,8 @@ const Home: React.FC = () => {
         ))}
         {
           randomQuiz.map((quiz) => (
-            <div className={divButtonClass}>
-            <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
+            <div key={quiz.id} className={divButtonClass}>
+            <Link to={`/quiz/${quiz.id}`}>
             
               <button
                 className={buttonClass}

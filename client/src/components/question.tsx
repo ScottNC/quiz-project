@@ -164,7 +164,7 @@ const Questions: React.FC = () => {
               {question.questionText}
             </div>
             {question.answers.map((answer, idx) => (
-              <div className="w-full p-2 flex justify-center font-sans">
+              <div key={answer.answerId} className="w-full p-2 flex justify-center font-sans">
                 <button
                   className={getBackground(idx)}
                   key={answer.answerId}
