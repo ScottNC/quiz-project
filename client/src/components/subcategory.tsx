@@ -36,7 +36,7 @@ const Subcategory: React.FC = () => {
   }, [categoryId]);
 
   return (
-    <section className="w-full bg-light">
+    <section className="w-full h-screen bg-light">
       <div className="pt-5 h-100 text-2xl text-dark font-bold text-center">
         {" "}
         Choose a quiz, and you're ready to go!
