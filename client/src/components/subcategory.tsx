@@ -43,8 +43,8 @@ const Subcategory: React.FC = () => {
       </div>
       <div className="flex flex-col gap-y-12;">
         {quizzes.map((quiz) => { console.log(quiz.id); return(
+          <div className="w-full p-6 flex justify-center font-sans">
           <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
-            <div className="w-full p-6 flex justify-center font-sans">
               <button
                 className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
     active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -54,8 +54,8 @@ const Subcategory: React.FC = () => {
               >
                 {quiz.name}
               </button>
-            </div>
           </Link>
+          </div>
         );})}
       </div>
     </section>

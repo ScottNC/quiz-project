@@ -9,8 +9,9 @@ const Welcome = () => {
         -itive! Are you ready to test your knowledge?
       </h1>
 
+      <div className="bg-light w-full p-8 flex justify-center font-sans">
       <Link to={`/home`}>
-        <div className="bg-light w-full p-8 flex justify-center font-sans">
+        
           <button
             className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
     active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -20,8 +21,9 @@ const Welcome = () => {
           >
             Begin
           </button>
-        </div>
+        
       </Link>
+      </div>
     </section>
   );
 };

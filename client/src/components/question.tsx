@@ -71,16 +71,18 @@ const Questions: React.FC = () => {
       if (questions[0].finalQuestion)
         return (
           <section className="w-full bg-light">
+            <div className="w-full p-8 flex justify-center font-sans">
             <Link to={`/seeresult/${roundId}`}>
-              <div className="w-full p-8 flex justify-center font-sans">
+              
                 <button
                   className="bg-darkest hover:bg-gray-400 text-lightest font-bold py-2 px-4 rounded-l;"
                   onClick={nextQuestion}
                 >
                   Finish Quiz
                 </button>
-              </div>
+              
             </Link>
+            </div>
           </section>
         );
       else

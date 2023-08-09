@@ -53,8 +53,8 @@ const QuizStart: React.FC = () => {
           {name.map((nameInfo: Name) => <h1>{nameInfo.name}</h1>)}
         </div>
         <h2>Are you ready to begin?</h2>
+        <div className="bg-light w-full p-8 flex justify-center font-sans"></div>
         <Link to={`/question/${quizId}/${roundId}`}>
-          <div className="bg-light w-full p-8 flex justify-center font-sans">
             <button
               className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
     active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -64,7 +64,6 @@ const QuizStart: React.FC = () => {
             >
               Start
             </button>
-          </div>
         </Link>
       </div>
     </section>

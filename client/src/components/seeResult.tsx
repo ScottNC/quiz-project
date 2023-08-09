@@ -7,8 +7,8 @@ export const SeeResult: React.FC = () => {
 
   return (
     <section className="w-full bg-light">
+      <div className="w-full p-8 flex justify-center font-sans">
       <Link to={`/results/${roundId}`}>
-        <div className="w-full p-8 flex justify-center font-sans">
           <button
             className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
     active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -18,8 +18,8 @@ export const SeeResult: React.FC = () => {
           >
             Click here to see your result!
           </button>
-        </div>
       </Link>
+      </div>
     </section>
   );
 };
