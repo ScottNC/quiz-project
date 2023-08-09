@@ -1,6 +1,6 @@
 import { queryDatabase } from "../db";
 import { QueryParams, isNumberString } from "../helpers/check";
-import { Answer, Category, CorrectAnswer, CurrentQuestion, Question, Quiz, Result, Stats, Subcategory } from "../types/quiz_types";
+import { Answer, Category, CorrectAnswer, CurrentQuestion, Name, Question, Quiz, Result, Stats, Subcategory } from "../types/quiz_types";
 
 export async function getCategory () {
   const categories : Category[] = await queryDatabase('SELECT id, name FROM category');
@@ -23,6 +23,12 @@ export async function getQuiz (categoryId: QueryParams, limit: QueryParams) {
   const quizzes : Quiz[] = await queryDatabase('SELECT id, name FROM quiz' + condition + ' ORDER BY RANDOM()' + limitQuery);
 
   return quizzes;
+}
+
+export async function getName (quizId: QueryParams) {
+  const name: Name[] = await queryDatabase('SELECT name FROM quiz WHERE id = $1', [`${quizId}`])
+
+  return name;
 }
 
 export async function getQuestion (quizId: QueryParams, questionNumber: QueryParams) {
