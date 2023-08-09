@@ -7,6 +7,9 @@ export const SeeResult: React.FC = () => {
 
   return (
     <section className="w-full h-screen bg-light">
+      <div className="text-2xl p-8 text-dark font-bold text-center">
+        Well done you have finished the quiz!
+      </div>
       <div className="w-full p-8 flex justify-center font-sans">
       <Link to={`/results/${roundId}`}>
           <button
