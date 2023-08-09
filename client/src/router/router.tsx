@@ -5,7 +5,6 @@ import Health from "../components/health";
 import Help from "../components/help";
 import Settings from "../components/settings";
 import Home from "../components/home";
-import Category from "../components/category";
 import SubCategory from "../components/subcategory";
 import Questions from "../components/question";
 import Results from "../components/results";
@@ -24,7 +23,6 @@ export const QuizAppRouter: React.FC = () => (
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
       <Route path="home" element={<Home />} />
-      <Route path="category/:categoryId" element={<Category />} />
       <Route path="subcategory/:categoryId" element={<SubCategory />} />
       <Route path="quiz/:quizId" element={<QuizStart />} />
       <Route path="question/:quizId/:roundId" element={<Questions />} />

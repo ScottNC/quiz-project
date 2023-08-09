@@ -47,7 +47,7 @@ const Home: React.FC = () => {
       </div>
       <div className="flex flex-col gap-y-12;">
         {categories.map((category) => (
-          <Link key={category.id} to={`/category/${category.id}`}>
+          <Link key={category.id} to={`/subcategory/${category.id}`}>
             <div className={divButtonClass}>
               <button
                 className={buttonClass}

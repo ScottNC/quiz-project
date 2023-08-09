@@ -14,7 +14,7 @@ const Subcategory: React.FC = () => {
 
   const { categoryId } = useParams();
 
-  const number_of_returns = 5; // how many quiz options we want to bring back
+  const number_of_returns = 4; // how many quiz options we want to bring back
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -25,7 +25,6 @@ const Subcategory: React.FC = () => {
             numberOfReturns: number_of_returns,
           },
         });
-
         setQuizzes(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,14 +37,14 @@ const Subcategory: React.FC = () => {
 
   return (
     <section className="w-full bg-light">
-      <div className="pt-5 text-2xl text-dark font-bold text-center">
+      <div className="pt-5 h-100 text-2xl text-dark font-bold text-center">
         {" "}
         Choose a quiz, and you're ready to go!
       </div>
       <div className="flex flex-col gap-y-12;">
-        {quizzes.map((quiz) => (
+        {quizzes.map((quiz) => { console.log(quiz.id); return(
           <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
-            <div className="w-full  h-screen p-6 flex justify-center font-sans">
+            <div className="w-full p-6 flex justify-center font-sans">
               <button
                 className="w-40 h-16 bg-dark text-lightest font-bold rounded-lg cursor-pointer select-none
     active:translate-y-2  active:[box-shadow:0_0px_0_0_#40798C,0_0px_0_0_#1b70f841]
@@ -57,7 +56,7 @@ const Subcategory: React.FC = () => {
               </button>
             </div>
           </Link>
-        ))}
+        );})}
       </div>
     </section>
   );
