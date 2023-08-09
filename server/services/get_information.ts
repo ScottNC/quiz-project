@@ -53,11 +53,15 @@ export async function getQuestion (quizId: QueryParams, questionNumber: QueryPar
 
 async function getAllAnswers(questionId: `${number}`, answerId: `${number}`, answer: string) {
 
-  const otherAnswerQuery : string = `SELECT a.id AS "answerId", a.text AS answer FROM answer AS a 
-                                      JOIN subcategory_relation AS sr ON a.id = sr.answer_id AND sr.subcategory_id IN 
-                                      (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
-                                      WHERE NOT a.id = ${answerId} AND a.type_id  = (SELECT type_id FROM question 
-                                      WHERE id = ${questionId}) ORDER BY RANDOM() LIMIT 3;`;
+  const otherAnswerQuery : string = `SELECT * FROM (
+          SELECT DISTINCT a.id AS "answerId", a.text AS answer 
+          FROM answer AS a 
+          JOIN subcategory_relation AS sr ON a.id = sr.answer_id 
+          WHERE sr.subcategory_id IN (SELECT subcategory_id FROM subcategory_relation WHERE question_id = ${questionId}) 
+          AND NOT a.id = ${answerId}
+          AND a.type_id = (SELECT type_id FROM question WHERE id = ${questionId})
+      ) AS subquery_alias 
+      ORDER BY RANDOM() LIMIT 3`;
 
   const otherAnswerInfo : Answer[] = await queryDatabase(otherAnswerQuery);
 
@@ -88,4 +92,19 @@ export async function getResult (roundId: QueryParams) {
   const results : Result[] = await queryDatabase(`SELECT answered, correct, (${getCountQuery}) AS "questionCount" FROM round WHERE round.id = ${roundId}`);
 
   return results;
+}
+
+export async function getStats() {
+
+  const stats = await queryDatabase(`SELECT (SELECT COUNT(*)::int FROM round WHERE status = 'finished' and created_at::date = now()::date) as "played_today"
+    , (SELECT SUM(correct)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS correct_today
+    , (SELECT SUM(answered)::int FROM round WHERE status = 'finished' AND created_at::date = now()::date) AS answered_today
+    , (SELECT COUNT(*)::int FROM round WHERE status = 'finished') as "played_total"
+    , (SELECT SUM(correct)::int FROM round WHERE status = 'finished') AS "correct_total"
+    , (SELECT SUM(answered)::int FROM round WHERE status = 'finished') AS "answered_total"
+    , q.name AS "quiz", s.name AS "topic" FROM quiz q JOIN round r ON q.id = r.quiz_id
+    JOIN subcategory_relation AS sr ON sr.quiz_id = q.id JOIN subcategory AS s ON sr.subcategory_id = s.id
+    GROUP BY q.name, s.name ORDER BY COUNT(*) DESC LIMIT 1`);
+
+  return stats;
 }

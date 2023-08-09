@@ -12,6 +12,7 @@ import Question from "../components/question";
 import Result from "../components/result";
 import NotFound from "../components/notfound";
 import { SeeResult } from "../components/seeResult";
+import Stats from "../components/stats";
 
 export const QuizAppRouter: React.FC = () => (
   <Routes>
@@ -19,6 +20,7 @@ export const QuizAppRouter: React.FC = () => (
       <Route index element={<Welcome />} />
       <Route path="welcome" element={<Welcome />} />
       <Route path="health" element={<Health />} />
+      <Route path="stats" element={<Stats />} />
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
       <Route path="home" element={<Home />} />
