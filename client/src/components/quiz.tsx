@@ -43,7 +43,6 @@ const QuizStart: React.FC = () => {
   if (!roundId)
     return (
       <div className="bg-light w-full flex flex-col gap-y-12;">
-        <h1> Quiz missing </h1>
       </div>
     );
 

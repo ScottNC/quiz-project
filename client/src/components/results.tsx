@@ -65,7 +65,6 @@ const Results: React.FC = () => {
     </section>
   ) : (
     <section className="w-full bg-light">
-      <h2>Loading Results...</h2>
     </section>
   );
 };

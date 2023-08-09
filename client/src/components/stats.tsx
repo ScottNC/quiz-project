@@ -69,7 +69,6 @@ const StatsPage: React.FC = () => {
     </section>
   ) : (
     <section>
-      <p>Loading Stats...</p>
     </section>
   );
 };
