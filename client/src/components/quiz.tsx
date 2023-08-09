@@ -2,15 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BASE_URL } from "../helpers/base_url";
 import { useParams, Link } from "react-router-dom";
+import { Name } from "./types/quiz_types";
 
 const QuizStart: React.FC = () => {
   const [roundId, setRoundId] = useState<number | null>(null);
   const effectCalled = useRef<boolean>(false);
 
+  const [name, setName] = useState<Name[]>([])
+
   const { quizId } = useParams();
 
   useEffect(() => {
-    {
+    const fetchQuizInfo = async () => {
+      const nameResponse = await axios.get(BASE_URL + '/name', {params: {quizId}});
+
+      setName(nameResponse.data);
+
+      axios
+        .post(BASE_URL + `/start?quizId=${quizId}`)
+        .then((response) => response.data)
+        .then((data) => {
+          if (data.length && data[0].message === "success")
+            setRoundId(data[0].id);
+          else setRoundId(null);
+        });
+    }
       try {
         if (effectCalled.current) return;
 
@@ -18,19 +34,11 @@ const QuizStart: React.FC = () => {
 
         if (quizId === undefined) return;
 
-        axios
-          .post(BASE_URL + `/start?quizId=${parseInt(quizId)}`)
-          .then((response) => response.data)
-          .then((data) => {
-            if (data.length && data[0].message === "success")
-              setRoundId(data[0].id);
-            else setRoundId(null);
-          });
+        fetchQuizInfo();
       } catch (error) {
         console.error("Error posting data:", error);
       }
-    }
-  }, [quizId]);
+    }, [quizId]);
 
   if (!roundId)
     return (
@@ -42,8 +50,10 @@ const QuizStart: React.FC = () => {
   return (
     <section className="w-full bg-light justify-center">
       <div className="pt-6 text-2xl text-dark font-bold text-center">
-        <h1> Are you ready to start? </h1>
-
+        <div>
+          {name.map((nameInfo: Name) => <h1>{nameInfo.name}</h1>)}
+        </div>
+        <h2>Are you ready to begin?</h2>
         <Link to={`/question/${quizId}/${roundId}`}>
           <div className="bg-light w-full p-8 flex justify-center font-sans">
             <button

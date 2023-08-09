@@ -51,3 +51,7 @@ export type Stats = {
   quiz: string;
   topic: string;
 }
+
+export type Name = {
+  name: string;
+}
